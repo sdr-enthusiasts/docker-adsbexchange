@@ -1,0 +1,31 @@
+FROM debian:stable-slim
+
+ENV ARCH_S6OVERLAY=armhf \
+    VERSION_S6OVERLAY=v1.22.1.0 \
+    S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
+    MLATCLIENTTAG=v0.2.10 \
+    BEASTPORT=30005 \
+    LOG_INTERVAL=900
+
+ADD https://github.com/just-containers/s6-overlay/releases/download/${VERSION_S6OVERLAY}/s6-overlay-${ARCH_S6OVERLAY}.tar.gz /tmp/s6-overlay.tar.gz
+
+RUN apt-get update -y && \
+    apt-get install -y --no-install-recommends build-essential debhelper python python3-dev socat ntp git ca-certificates procps pv uuid-runtime curl && \
+    mkdir /src && \
+    cd /src && \
+    git clone -b ${MLATCLIENTTAG} https://github.com/adsbxchange/mlat-client.git && \
+    cd /src/mlat-client && \
+    dpkg-buildpackage -b -uc && \
+    cd /src && \
+    dpkg -i mlat-client_*.deb && \
+    tar -xzf /tmp/s6-overlay.tar.gz -C / && \
+    apt-get remove -y build-essential debhelper python3-dev ntp git procps autoconf automake binutils bsdmainutils bzip2 cpp cpp-8 g++ g++-8 gcc gcc-8 git make man-db sensible-utils xz-utils && \
+    apt-get purge -y && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/* /src
+
+COPY etc/ /etc/
+COPY scripts/ /scripts/
+
+ENTRYPOINT [ "/init" ]
+
