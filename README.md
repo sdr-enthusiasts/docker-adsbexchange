@@ -1,5 +1,5 @@
 # docker-adsbexchange
-Docker container to feed ADSB data into adsbexchange. Designed to work in tandem with mikenye/piaware or another BEAST provider. Builds and runs on x86_64, arm32v7 (see below).
+Docker container to feed ADSB data into adsbexchange. Designed to work in tandem with mikenye/piaware or another BEAST provider. Builds and runs on x86_64, arm32v7 & arm64v8 (see below).
 
 The container pulls ModeS/BEAST information from the mikenye/piaware container (or another host providing ModeS/BEAST data), and sends data to adsbexchange.
 
@@ -9,6 +9,7 @@ For more information on adsbexchange, see here: https://adsbexchange.com/how-to-
 * `latest`, `20200204`
   * `latest-amd64`, `20200204-amd64` (`20200204` branch, `Dockerfile.amd64`)
   * `latest-arm32v7`, `20200204-arm32v7` (`20200204` branch, `Dockerfile.arm32v7`)
+  * `latest-arm64v8`, `20200204-arm64v8` (`20200204` branch, `Dockerfile.arm64v8`)
 * `development` (`master` branch, `Dockerfile.amd64`, `amd64` architecture only, not recommended for production)
 
 ## Changelog
@@ -19,7 +20,8 @@ For more information on adsbexchange, see here: https://adsbexchange.com/how-to-
 ## Multi Architecture Support
 Currently, this image should pull and run on the following architectures:
  * ```amd64```: Linux x86-64
- * ```arm32v7```, ```armv7l```: ARMv7 32-bit (Odroid HC1/HC2/XU4, RPi 2/3)
+ * ```arm32v7```, ```armv7l```: ARMv7 32-bit (Odroid HC1/HC2/XU4, RPi 2/3/4)
+ * ```arm64v8```, ```aarch64```: ARMv8 64-bit (RPi 4)
 
 ## Configuring `mikenye/piaware` Container
 If you're using this container with the `mikenye/piaware` container to provide ModeS/BEAST data, you'll need to ensure you've opened port 30005 into the `mikenye/piaware` container, so this container can connect to it.
