@@ -1,0 +1,35 @@
+#!/usr/bin/with-contenv sh
+
+# Check to make sure the correct command line arguments have been set
+EXITCODE=0
+if [ -z "${LAT}" ]; then
+  echo "ERROR: LAT environment variable not set"
+  EXITCODE=1
+fi
+if [ -z "${LONG}" ]; then
+  echo "ERROR: LONG environment variable not set"
+  EXITCODE=1
+fi
+if [ -z "${BEASTHOST}" ]; then
+  echo "ERROR: BEASTHOST environment variable not set"
+  EXITCODE=1
+fi
+if [ -z "${ALT}" ]; then
+  echo "ERROR: ALT environment variable not set"
+  EXITCODE=1
+fi
+if [ -z "${SITENAME}" ]; then
+  echo "ERROR: SITENAME environment variable not set"
+  EXITCODE=1
+fi
+if [ $EXITCODE -ne 0 ]; then
+  exit 1
+fi
+
+# Set up timezone
+if [ -z "${TZ}" ]; then
+  echo "WARNING: TZ environment variable not set"
+else
+  ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+fi
+

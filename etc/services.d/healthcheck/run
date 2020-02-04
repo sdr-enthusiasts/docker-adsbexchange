@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv sh
+
+sleep 900
+/scripts/health_from_adsbexchange.py | awk -W interactive '{print "[healthcheck] " $0}'
+

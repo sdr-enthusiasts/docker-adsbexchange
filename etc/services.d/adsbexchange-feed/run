@@ -1,0 +1,6 @@
+#!/usr/bin/with-contenv sh
+
+#set -eo pipefail
+(socat -d -d -u TCP:${BEASTHOST}:${BEASTPORT} - | pv --force --timer --rate --average-rate --bytes --interval ${LOG_INTERVAL} --format 'Elapsed time: %t, Bytes transferred: %b, Current rate: %r, Average rate: %a' | socat -d -d -u - TCP:feed.adsbexchange.com:30005) 2>&1 | stdbuf -oL tr '\r' '\n' | awk -W interactive '{print "[adsbexchange-feed] " $0}'
+#socat -d -d -u TCP:${BEASTHOST}:${BEASTPORT} TCP:feed.adsbexchange.com:30005 2>&1 | awk -W interactive '{print "[asdbx] " $0}'
+

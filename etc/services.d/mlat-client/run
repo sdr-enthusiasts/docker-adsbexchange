@@ -1,0 +1,14 @@
+#!/usr/bin/with-contenv sh
+
+#set -eo pipefail
+mlat-client --input-type beast \
+            --no-udp \
+            --input-connect ${BEASTHOST}:${BEASTPORT} \
+            --server feed.adsbexchange.com:31090 \
+            --user ${SITENAME} \
+            --lat ${LAT} \
+            --lon ${LONG} \
+            --alt ${ALT} \
+            --results beast,connect,${BEASTHOST}:${BEASTPORT} \
+            --privacy 2>&1 | awk -W interactive '{print "[mlat-client] " $0}'
+
