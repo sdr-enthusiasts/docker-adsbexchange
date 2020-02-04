@@ -33,3 +33,5 @@ else
   ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 fi
 
+# Sanitize site name
+SITENAME="$(echo -e "${SITENAME}" | tr -dc '[a-zA-Z0-9]_\-')"
