@@ -46,7 +46,7 @@ docker run --rm -it --entrypoint uuidgen mikenye/adsbexchange -t
 
 Take note of the UUID returned. You should pass it as the `UUID` environment variable when running the container.
 
-You will be able to view your site's stats by visiting https://www.adsbexchange.com/api/feeders/?feed=**YOUR-UUID-HERE**
+You will be able to view your site's stats by visiting `https://www.adsbexchange.com/api/feeders/?feed=YOUR-UUID-HERE`. The link with your UUID will be printed to the container log when the container starts.
 
 If you don't generate a static UUID, a dynamic UUID will be created when the container starts.
 
