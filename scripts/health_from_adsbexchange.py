@@ -14,6 +14,7 @@ else:
         print("Statistics for feeder '%s':" % (os.environ['SITENAME']))
     else:
         print("Statistics for feeder '%s', UUID '%s':" % (os.environ['SITENAME'], stats_json['stats-uuid']))
+        print("Live stats available at: https://www.adsbexchange.com/api/feeders/?feed=%s" % (stats_json['stats-uuid']))
     print("")
     print("  - Lines output: %s" % (stats_json['outlines']))
     datadict = dict()
