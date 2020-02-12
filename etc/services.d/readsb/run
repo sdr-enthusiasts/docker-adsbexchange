@@ -1,0 +1,21 @@
+#!/usr/bin/with-contenv sh
+
+#set -eo pipefail
+#socat -d -d -u TCP:${BEASTHOST}:${BEASTPORT} TCP:feed.adsbexchange.com:30005 2>&1 | awk -W interactive '{print "[asdbx] " $0}'
+
+/usr/local/bin/readsb \
+  --net \
+  --net-only \
+  --quiet \
+  --net-beast-reduce-interval 1 \
+  --net-connector feed.adsbexchange.com,30005,beast_reduce_out \
+  --net-connector ${BEASTHOST},${BEASTPORT},beast_in \
+  --net-ro-interval 0.5 \
+  --net-ri-port 0 \
+  --net-ro-port 0 \
+  --net-sbs-port 0 \
+  --net-bi-port 0 \
+  --net-bo-port 0 \
+  --stats-every=900 \
+  2>&1 | awk -W interactive '{print "[readsb] " $0}'
+
