@@ -4,15 +4,18 @@
   --net \
   --net-only \
   --quiet \
+  --net-heartbeat 60 \
+  --net-ro-size 1280 \
   --net-beast-reduce-interval 1 \
   --net-connector feed.adsbexchange.com,30005,beast_reduce_out \
   --net-connector ${BEASTHOST},${BEASTPORT},beast_in \
-  --net-ro-interval 0.5 \
+  --net-ro-interval 0.2 \
   --net-ri-port 0 \
   --net-ro-port 0 \
   --net-sbs-port 0 \
   --net-bi-port 0 \
   --net-bo-port 0 \
-  --stats-every=900 \
-  2>&1 | awk -W interactive '{print "[readsb] " $0}'
+  --stats-every=${LOG_INTERVAL} \
+  --write-json=/run/readsb \
+  2>&1 | awk -W interactive '{print "[adsbexchange-feed] " $0}'
 
