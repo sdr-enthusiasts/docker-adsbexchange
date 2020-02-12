@@ -1,8 +1,5 @@
 #!/usr/bin/with-contenv sh
 
-#set -eo pipefail
-#socat -d -d -u TCP:${BEASTHOST}:${BEASTPORT} TCP:feed.adsbexchange.com:30005 2>&1 | awk -W interactive '{print "[asdbx] " $0}'
-
 /usr/local/bin/readsb \
   --net \
   --net-only \
