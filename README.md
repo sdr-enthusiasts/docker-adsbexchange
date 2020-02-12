@@ -34,6 +34,22 @@ The altitude of your antenna must be passed via the `ANT` environment variable r
 
 Lastly, you should specify a site name via the `SITENAME` environment variable. This field supports letters, numbers, `-` & `_` only. Any other characters will be stripped upon container initialisation.
 
+## Generating a site UUID ##
+
+First-time users are encouraged to generate a static UUID.
+
+In order to generate a site UUID, initially run the container with the following command:
+
+```
+docker run --rm -it --entrypoint uuidgen mikenye/adsbexchange -t
+```
+
+Take note of the UUID returned. You should pass it as the `UUID` environment variable when running the container.
+
+You will be able to view your site's stats by visiting https://www.adsbexchange.com/api/feeders/?feed=**YOUR-UUID-HERE**
+
+If you don't generate a static UUID, a dynamic UUID will be created when the container starts.
+
 ## Up-and-Running with `docker run`
 
 ```
@@ -48,6 +64,7 @@ docker run \
  -e LONG=111.11111 \
  -e ALT=50m \
  -e SITENAME=My_Cool_ADSB_Receiver
+ -e UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
  mikenye/adsbexchange
 ```
 
@@ -69,6 +86,7 @@ services:
       - LONG=111.11111
       - ALT=50m
       - SITENAME=My_Cool_ADSB_Receiver
+      - UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ```
 
 ## Up-and-Running with Docker Compose, including `mikenye/piaware`
@@ -108,6 +126,7 @@ services:
       - LONG=111.11111
       - ALT=50m
       - SITENAME=My_Cool_ADSB_Receiver
+      - UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ```
 
 For an explanation of the `mikenye/piaware` image's configuration, see that image's readme.
@@ -126,6 +145,7 @@ There are a series of available environment variables:
 | `LONG`               | The longitude of the antenna (required) | |
 | `ALT`                | The altitude of the antenna ('m' or 'ft' suffix) | |
 | `SITENAME`           | The name of your site (A-Z, a-z, `-`, `_`) | |
+| `UUID`               | Your static UUID (optional, but recommended) | dynamically generated |
 
 
 ## Ports
