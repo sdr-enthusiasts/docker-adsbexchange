@@ -1,0 +1,4 @@
+#!/usr/bin/with-contenv sh
+
+/usr/local/bin/json-status 2>&1 | awk -W interactive '{print "[adsbexchange-stats] " $0}'
+

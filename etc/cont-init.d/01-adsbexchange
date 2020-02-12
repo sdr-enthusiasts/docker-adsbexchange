@@ -25,7 +25,10 @@ fi
 if [ $EXITCODE -ne 0 ]; then
   exit 1
 fi
-
+if [ -z "${UUID}" ]; then
+  UUID=$(uuidgen -t)
+  echo "WARNING: UUID environment variable was not set, using dynamically generated UUID: ${UUID}"
+fi
 # Set up timezone
 if [ -z "${TZ}" ]; then
   echo "WARNING: TZ environment variable not set"
@@ -35,3 +38,8 @@ fi
 
 # Sanitize site name
 SITENAME="$(echo -e "${SITENAME}" | tr -dc '[a-zA-Z0-9]_\-')"
+
+# Write UUID file
+echo $UUID > $UUID_FILE
+echo "Statistics will be available at: https://www.adsbexchange.com/api/feeders/?feed=${UUID}"
+

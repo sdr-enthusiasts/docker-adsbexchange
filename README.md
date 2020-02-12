@@ -6,13 +6,22 @@ The container pulls ModeS/BEAST information from the mikenye/piaware container (
 For more information on adsbexchange, see here: https://adsbexchange.com/how-to-feed/. This container uses a modified version of the "script method" outlines on that page.
 
 ## Supported tags and respective Dockerfiles
-* `latest`, `20200204`
-  * `latest-amd64`, `20200204-amd64` (`20200204` branch, `Dockerfile.amd64`)
-  * `latest-arm32v7`, `20200204-arm32v7` (`20200204` branch, `Dockerfile.arm32v7`)
-  * `latest-arm64v8`, `20200204-arm64v8` (`20200204` branch, `Dockerfile.arm64v8`)
+* `latest`, `20200212`
+  * `latest-amd64`, `20200212-amd64` (`20200212` branch, `Dockerfile.amd64`)
+  * `latest-arm32v7`, `20200212-arm32v7` (`20200212` branch, `Dockerfile.arm32v7`)
+  * `latest-arm64v8`, `20200212-arm64v8` (`20200212` branch, `Dockerfile.arm64v8`)
+* `20200204`
+  * `20200204-amd64` (`20200204` branch, `Dockerfile.amd64`)
+  * `20200204-arm32v7` (`20200204` branch, `Dockerfile.arm32v7`)
+  * `20200204-arm64v8` (`20200204` branch, `Dockerfile.arm64v8`)
 * `development` (`master` branch, `Dockerfile.amd64`, `amd64` architecture only, not recommended for production)
 
 ## Changelog
+
+### 20200212
+ * Change data submission method from `socat` to `readsb` (requested in [Issue #1](https://github.com/mikenye/docker-adsbexchange/issues/1#issue-563773894))
+ * Add [adsbxchange/adsbexchange-stats](https://github.com/adsbxchange/adsbexchange-stats) (suggested in [Issue #1](https://github.com/mikenye/docker-adsbexchange/issues/1#issuecomment-585067817))
+ * Add ability to pass a static site UUID via environment variable
 
 ### 20200204
  * Original image
@@ -34,6 +43,22 @@ The altitude of your antenna must be passed via the `ANT` environment variable r
 
 Lastly, you should specify a site name via the `SITENAME` environment variable. This field supports letters, numbers, `-` & `_` only. Any other characters will be stripped upon container initialisation.
 
+## Generating a site UUID ##
+
+First-time users are encouraged to generate a static UUID.
+
+In order to generate a site UUID, initially run the container with the following command:
+
+```
+docker run --rm -it --entrypoint uuidgen mikenye/adsbexchange -t
+```
+
+Take note of the UUID returned. You should pass it as the `UUID` environment variable when running the container.
+
+You will be able to view your site's stats by visiting `https://www.adsbexchange.com/api/feeders/?feed=YOUR-UUID-HERE`. The link with your UUID will be printed to the container log when the container starts.
+
+If you don't generate a static UUID, a dynamic UUID will be created when the container starts.
+
 ## Up-and-Running with `docker run`
 
 ```
@@ -48,6 +73,7 @@ docker run \
  -e LONG=111.11111 \
  -e ALT=50m \
  -e SITENAME=My_Cool_ADSB_Receiver
+ -e UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
  mikenye/adsbexchange
 ```
 
@@ -69,6 +95,7 @@ services:
       - LONG=111.11111
       - ALT=50m
       - SITENAME=My_Cool_ADSB_Receiver
+      - UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ```
 
 ## Up-and-Running with Docker Compose, including `mikenye/piaware`
@@ -108,6 +135,7 @@ services:
       - LONG=111.11111
       - ALT=50m
       - SITENAME=My_Cool_ADSB_Receiver
+      - UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ```
 
 For an explanation of the `mikenye/piaware` image's configuration, see that image's readme.
@@ -126,6 +154,7 @@ There are a series of available environment variables:
 | `LONG`               | The longitude of the antenna (required) | |
 | `ALT`                | The altitude of the antenna ('m' or 'ft' suffix) | |
 | `SITENAME`           | The name of your site (A-Z, a-z, `-`, `_`) | |
+| `UUID`               | Your static UUID (optional, but recommended) | dynamically generated |
 
 
 ## Ports
