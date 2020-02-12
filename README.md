@@ -6,13 +6,22 @@ The container pulls ModeS/BEAST information from the mikenye/piaware container (
 For more information on adsbexchange, see here: https://adsbexchange.com/how-to-feed/. This container uses a modified version of the "script method" outlines on that page.
 
 ## Supported tags and respective Dockerfiles
-* `latest`, `20200204`
-  * `latest-amd64`, `20200204-amd64` (`20200204` branch, `Dockerfile.amd64`)
-  * `latest-arm32v7`, `20200204-arm32v7` (`20200204` branch, `Dockerfile.arm32v7`)
-  * `latest-arm64v8`, `20200204-arm64v8` (`20200204` branch, `Dockerfile.arm64v8`)
+* `latest`, `20200212`
+  * `latest-amd64`, `20200212-amd64` (`20200212` branch, `Dockerfile.amd64`)
+  * `latest-arm32v7`, `20200212-arm32v7` (`20200212` branch, `Dockerfile.arm32v7`)
+  * `latest-arm64v8`, `20200212-arm64v8` (`20200212` branch, `Dockerfile.arm64v8`)
+* `20200204`
+  * `20200204-amd64` (`20200204` branch, `Dockerfile.amd64`)
+  * `20200204-arm32v7` (`20200204` branch, `Dockerfile.arm32v7`)
+  * `20200204-arm64v8` (`20200204` branch, `Dockerfile.arm64v8`)
 * `development` (`master` branch, `Dockerfile.amd64`, `amd64` architecture only, not recommended for production)
 
 ## Changelog
+
+### 20200212
+ * Change data submission method from `socat` to `readsb` (requested in [Issue #1](https://github.com/mikenye/docker-adsbexchange/issues/1#issue-563773894))
+ * Add [adsbxchange/adsbexchange-stats](https://github.com/adsbxchange/adsbexchange-stats) (suggested in [Issue #1](https://github.com/mikenye/docker-adsbexchange/issues/1#issuecomment-585067817))
+ * Add ability to pass a static site UUID via environment variable
 
 ### 20200204
  * Original image
