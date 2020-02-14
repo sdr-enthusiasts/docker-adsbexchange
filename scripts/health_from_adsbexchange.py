@@ -31,7 +31,7 @@ else:
     for k in datadict.keys():
         ks = k.split()
         if k.lower().count('mlat') >= 1:
-            print("MLAT feeding OK")
+            print("MLAT data feeding OK")
             print("  - Data Incoming From: %s" % (ks[0]))
             print("  - Route:Port: %s" % (ks[1]))
             print("  - Backend: %s" % (ks[2]))
@@ -40,7 +40,7 @@ else:
             print("")
             mlat_ok = True
         if k.lower().count('beast') >= 1:
-            print("Mode-S Beast feeding OK")
+            print("Beast data feeding OK")
             print("  - Data Incoming From: %s" % (ks[0]))
             print("  - Route:Port: %s" % (ks[1]))
             print("  - Backend: %s" % (ks[2]))
