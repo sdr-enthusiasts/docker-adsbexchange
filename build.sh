@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSION=20200212
+VERSION=20200214
 ARCH=`uname -m`
 IMAGE=mikenye/adsbexchange
 
