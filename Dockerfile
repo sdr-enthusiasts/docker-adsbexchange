@@ -1,14 +1,11 @@
 FROM debian:stable-slim
 
-ENV ARCH_S6OVERLAY=armhf \
-    VERSION_S6OVERLAY=v1.22.1.0 \
-    S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
+ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
+    RTLSDRTAG=0.6.0 \
     MLATCLIENTTAG=v0.2.10 \
     BEASTPORT=30005 \
     LOG_INTERVAL=900 \
     UUID_FILE="/boot/adsbx-uuid"
-
-ADD https://github.com/just-containers/s6-overlay/releases/download/${VERSION_S6OVERLAY}/s6-overlay-${ARCH_S6OVERLAY}.tar.gz /tmp/s6-overlay.tar.gz
 
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends \
@@ -35,7 +32,7 @@ RUN apt-get update -y && \
     cd /src && \
     dpkg -i mlat-client_*.deb && \
     rm mlat-client_*.deb && \
-    git clone git://git.osmocom.org/rtl-sdr.git /src/rtl-sdr && \
+    git clone -b ${RTLSDRTAG} git://git.osmocom.org/rtl-sdr.git /src/rtl-sdr && \
     mkdir -p /src/rtl-sdr/build && \
     cd /src/rtl-sdr/build && \
     cmake ../ -DINSTALL_UDEV_RULES=ON -Wno-dev && \
@@ -51,7 +48,7 @@ RUN apt-get update -y && \
     cd /src && \
     git clone https://github.com/adsbxchange/adsbexchange-stats.git && \
     mv /src/adsbexchange-stats/json-status /usr/local/bin/json-status && \
-    tar -xzf /tmp/s6-overlay.tar.gz -C / && \
+    curl -s https://raw.githubusercontent.com/mikenye/deploy-s6-overlay/master/deploy-s6-overlay.sh | sh && \
     apt-get remove -y \
         build-essential \
         debhelper \

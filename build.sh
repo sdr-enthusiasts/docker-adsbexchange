@@ -1,7 +1,7 @@
 #!/bin/sh
 
-VERSION=20200214
-ARCH=`uname -m`
+VERSION=20200227
+ARCH=$(uname -m)
 IMAGE=mikenye/adsbexchange
 
 # Make architecture names match docker 'standards' (https://docs.docker.com/docker-for-mac/multi-arch/)
@@ -15,12 +15,6 @@ if [ ${ARCH} = "armv7l" ]; then
     ARCH="arm32v7"
 fi
 
-# Check if target dockerfile exists
-if [ -f "Dockerfile.${ARCH}" ]; then
-    # Build
-    echo Building from Dockerfile.${ARCH}
-    docker build -f Dockerfile.${ARCH} -t ${IMAGE}:${VERSION}-${ARCH} .
-else
-    echo Target file Dockerfile.${ARCH} does not exist!
-fi
+# Build
+docker build -t ${IMAGE}:${VERSION}-${ARCH} .
 
