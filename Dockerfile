@@ -23,7 +23,8 @@ RUN apt-get update -y && \
         cmake \
         ncurses-dev \
         libusb-1.0-0 \
-        libusb-1.0-0-dev && \
+        libusb-1.0-0-dev \
+        gnupg && \
     mkdir /src && \
     cd /src && \
     git clone -b ${MLATCLIENTTAG} https://github.com/adsbxchange/mlat-client.git && \
@@ -73,7 +74,8 @@ RUN apt-get update -y && \
         sensible-utils \
         ncurses-dev \
         libusb-1.0-0-dev \
-        xz-utils && \
+        xz-utils \
+        gnupg && \
     apt-get purge -y && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/* /src

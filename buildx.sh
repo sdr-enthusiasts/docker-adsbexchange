@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSION=20200227
+VERSION=20200310
 IMAGE=mikenye/adsbexchange
 
 # Build the image using buildx
