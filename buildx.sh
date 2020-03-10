@@ -6,8 +6,8 @@ IMAGE=adsbexchange
 
 # build temp image to get versions
 docker build -t ${REPO}/${IMAGE}:temp .
-docker run --rm -it --entrypoint cat ${REPO}/${IMAGE}:temp /VERSIONS > /tmp/${REPO}_${IMAGE}.current
-docker run --rm -it --entrypoint cat ${REPO}/${IMAGE}:latest /VERSIONS > /tmp/${REPO}_${IMAGE}.latest
+docker run --rm --entrypoint cat ${REPO}/${IMAGE}:temp /VERSIONS > /tmp/${REPO}_${IMAGE}.current
+docker run --rm --entrypoint cat ${REPO}/${IMAGE}:latest /VERSIONS > /tmp/${REPO}_${IMAGE}.latest
 
 # Chevk for version changes between this build and :latest
 echo ""
