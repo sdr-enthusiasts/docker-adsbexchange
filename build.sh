@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSION=20200227
+VERSION=$(date +%Y%m%d)
 ARCH=$(uname -m)
 IMAGE=mikenye/adsbexchange
 
