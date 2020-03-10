@@ -7,7 +7,8 @@ ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
     LOG_INTERVAL=900 \
     UUID_FILE="/boot/adsbx-uuid"
 
-RUN apt-get update -y && \
+RUN set -x && \
+    apt-get update -y && \
     apt-get install -y --no-install-recommends \
         build-essential \
         debhelper \
@@ -81,7 +82,8 @@ RUN apt-get update -y && \
         gnupg && \
     apt-get purge -y && \
     apt-get autoremove -y && \
-    rm -rf /var/lib/apt/lists/* /src
+    rm -rf /var/lib/apt/lists/* /src && \
+    cat /VERSIONS
 
 COPY etc/ /etc/
 COPY scripts/ /scripts/
