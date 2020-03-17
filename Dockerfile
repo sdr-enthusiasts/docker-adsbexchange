@@ -1,8 +1,6 @@
 FROM debian:stable-slim
 
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
-    RTLSDRTAG=0.6.0 \
-    MLATCLIENTTAG=v0.2.10 \
     BEASTPORT=30005 \
     LOG_INTERVAL=900 \
     UUID_FILE="/boot/adsbx-uuid"
@@ -26,29 +24,45 @@ RUN set -x && \
         libusb-1.0-0 \
         libusb-1.0-0-dev \
         gnupg && \
-    mkdir /src && \
-    cd /src && \
-    git clone -b ${MLATCLIENTTAG} https://github.com/adsbxchange/mlat-client.git /src/mlat-client && \
+    git config --global advice.detachedHead false && \
+    echo "========== Install mlat-client ==========" && \
+    git clone https://github.com/adsbxchange/mlat-client.git /src/mlat-client && \
     cd /src/mlat-client && \
-    echo "mlat-client $(git log | head -1)" >> /VERSIONS && \
+    export BRANCH_MLATCLIENT=$(git tag --sort="-creatordate" | head -1) && \
+    git checkout ${BRANCH_MLATCLIENT} && \
+    echo "mlat-client ${BRANCH_MLATCLIENT}" >> /VERSIONS && \
     dpkg-buildpackage -b -uc && \
     cd /src && \
     dpkg -i mlat-client_*.deb && \
     rm mlat-client_*.deb && \
-    git clone -b ${RTLSDRTAG} git://git.osmocom.org/rtl-sdr.git /src/rtl-sdr && \
+    echo "========== Install RTL-SDR ==========" && \
+    git clone git://git.osmocom.org/rtl-sdr.git /src/rtl-sdr && \
+    cd /src/rtl-sdr && \
+    export BRANCH_RTLSDR=$(git tag --sort="-creatordate" | head -1) && \
+    git checkout tags/${BRANCH_RTLSDR} && \
+    echo "rtl-sdr ${BRANCH_RTLSDR}" >> /VERSIONS && \
     mkdir -p /src/rtl-sdr/build && \
     cd /src/rtl-sdr/build && \
-    echo "rtl-sdr $(git log | head -1)" >> /VERSIONS && \
     cmake ../ -DINSTALL_UDEV_RULES=ON -Wno-dev && \
-    make -j -Wstringop-truncation && \
-    make -j -Wstringop-truncation install && \
-    git clone --depth 1 https://github.com/Mictronics/readsb.git /src/readsb && \
+    make -Wstringop-truncation && \
+    make -Wstringop-truncation install && \
+    cp -v /src/rtl-sdr/rtl-sdr.rules /etc/udev/rules.d/ && \
+    echo "========== Blacklist RTL-SDR dongle ==========" && \
+    mkdir -p /etc/modprobe.d && \
+    echo "blacklist dvb_usb_rtl28xxu" >> /etc/modprobe.d/no-rtl.conf && \
+    echo "blacklist rtl2832" >> /etc/modprobe.d/no-rtl.conf && \
+    echo "blacklist rtl2830" >> /etc/modprobe.d/no-rtl.conf && \
+    echo "========== Install readsb ==========" && \
+    git clone https://github.com/Mictronics/readsb.git /src/readsb && \
     cd /src/readsb && \
-    echo "readsb $(git log | head -1)" >> /VERSIONS && \
+    export BRANCH_READSB=$(git tag --sort="-creatordate" | head -1) && \
+    git checkout tags/${BRANCH_READSB} && \
+    echo "readsb ${BRANCH_RTLSDR}" >> /VERSIONS && \
     make -j RTLSDR=yes && \
     mv viewadsb /usr/local/bin/ && \
     mv readsb /usr/local/bin/ && \
     mkdir -p /run/readsb && \
+    echo "========== Install adsbexchange-stats ==========" && \
     git clone https://github.com/adsbxchange/adsbexchange-stats.git /src/adsbexchange-stats && \
     cd /src/adsbexchange-stats && \
     echo "adsbexchange-stats $(git log | head -1)" >> /VERSIONS && \
@@ -89,4 +103,3 @@ COPY etc/ /etc/
 COPY scripts/ /scripts/
 
 ENTRYPOINT [ "/init" ]
-
