@@ -1,5 +1,6 @@
-#!/usr/bin/with-contenv sh
+#!/usr/bin/with-contenv bash
+# shellcheck shell=bash
 
 sleep 900
-/scripts/health_from_adsbexchange.py | awk -W interactive '{print "[healthcheck] " $0}'
-
+exec \
+    /scripts/health_from_adsbexchange.py | awk -W interactive '{print "[healthcheck] " $0}'
