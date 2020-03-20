@@ -5,6 +5,10 @@ VERSION=$(date +%Y%m%d)
 REPO=mikenye
 IMAGE=adsbexchange
 
+docker context use x86_64
+export DOCKER_CLI_EXPERIMENTAL="enabled"
+docker buildx use homecluster
+
 # build temp image to get versions
 docker build -t "${REPO}/${IMAGE}:temp" .
 docker run --rm --entrypoint cat "${REPO}/${IMAGE}:temp" /VERSIONS > "/tmp/${REPO}_${IMAGE}.current"
