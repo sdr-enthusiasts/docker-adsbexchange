@@ -30,7 +30,7 @@ RUN set -x && \
     git clone https://github.com/adsbxchange/mlat-client.git /src/mlat-client && \
     cd /src/mlat-client && \
     export BRANCH_MLATCLIENT=$(git tag --sort="-creatordate" | head -1) && \
-    git checkout ${BRANCH_MLATCLIENT} && \
+    git checkout "${BRANCH_MLATCLIENT}" && \
     echo "mlat-client ${BRANCH_MLATCLIENT}" >> /VERSIONS && \
     dpkg-buildpackage -b -uc && \
     cd /src && \
@@ -40,7 +40,7 @@ RUN set -x && \
     git clone git://git.osmocom.org/rtl-sdr.git /src/rtl-sdr && \
     cd /src/rtl-sdr && \
     export BRANCH_RTLSDR=$(git tag --sort="-creatordate" | head -1) && \
-    git checkout tags/${BRANCH_RTLSDR} && \
+    git checkout tags/"${BRANCH_RTLSDR}" && \
     echo "rtl-sdr ${BRANCH_RTLSDR}" >> /VERSIONS && \
     mkdir -p /src/rtl-sdr/build && \
     cd /src/rtl-sdr/build && \
@@ -57,7 +57,7 @@ RUN set -x && \
     git clone https://github.com/Mictronics/readsb.git /src/readsb && \
     cd /src/readsb && \
     export BRANCH_READSB=$(git tag --sort="-creatordate" | head -1) && \
-    git checkout tags/${BRANCH_READSB} && \
+    git checkout tags/"${BRANCH_READSB}" && \
     echo "readsb ${BRANCH_RTLSDR}" >> /VERSIONS && \
     make -j RTLSDR=yes && \
     mv viewadsb /usr/local/bin/ && \

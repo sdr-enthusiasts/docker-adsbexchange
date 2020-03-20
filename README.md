@@ -1,25 +1,26 @@
-# docker-adsbexchange
+# mikenye/adsbexchange
 
 Docker container to feed ADSB data into adsbexchange. Designed to work in tandem with mikenye/piaware or another BEAST provider. Builds and runs on x86_64, arm32v7 & arm64v8 (see below).
 
-The container pulls ModeS/BEAST information from the mikenye/piaware container (or another host providing ModeS/BEAST data), and sends data to adsbexchange.
+The container pulls ModeS/BEAST information from the [mikenye/piaware](https://hub.docker.com/repository/docker/mikenye/piaware) container (or another host providing ModeS/BEAST data, for example [mikenye/readsb](https://hub.docker.com/repository/docker/mikenye/readsb)), and sends data to adsbexchange.
 
 For more information on adsbexchange, see here: [ADSBExchange How-To-Feed](https://adsbexchange.com/how-to-feed/). This container uses a modified version of the "script method" outlines on that page.
 
 ## Supported tags and respective Dockerfiles
 
-* `latest`, `20200227` (`20200227` branch, `Dockerfile`)
-* `20200212`
-  * `20200212-amd64` (`20200212` branch, `Dockerfile.amd64`)
-  * `20200212-arm32v7` (`20200212` branch, `Dockerfile.arm32v7`)
-  * `20200212-arm64v8` (`20200212` branch, `Dockerfile.arm64v8`)
-* `20200204`
-  * `20200204-amd64` (`20200204` branch, `Dockerfile.amd64`)
-  * `20200204-arm32v7` (`20200204` branch, `Dockerfile.arm32v7`)
-  * `20200204-arm64v8` (`20200204` branch, `Dockerfile.arm64v8`)
-* `development` (`master` branch, `Dockerfile.amd64`, `amd64` architecture only, not recommended for production)
+* `latest` should always contain the latest released versions of `rtl-sdr`, `mlat-client`, `readsb` and `adsbexchange-stats`. This image is built nightly from the [`master` branch](https://github.com/mikenye/docker-adsbexchange/tree/master) [`Dockerfile`](https://github.com/mikenye/docker-adsbexchange/blob/master/Dockerfile) for all supported architectures.
+* `development` ([`master` branch](https://github.com/mikenye/docker-adsbexchange/tree/master), [`Dockerfile`](https://github.com/mikenye/docker-adsbexchange/blob/master/Dockerfile), `amd64` architecture only, built on commit, not recommended for production)
+* Specific version and architecture tags are available if required, however these are not regularly updated. It is generally recommended to run `latest`.
+
+## Contributors
+
+* Thanks to [ShoGinn](https://github.com/ShoGinn) for many contributions to the 20200320 release and tidy up of code & readme.
 
 ## Changelog
+
+### 20200320
+
+* Linting and tidy up (thanks ShoGinn)
 
 ### 20200227
 
