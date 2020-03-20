@@ -8,22 +8,23 @@ ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
 RUN set -x && \
     apt-get update -y && \
     apt-get install -y --no-install-recommends \
-        build-essential \
-        debhelper \
-        python \
-        python3-dev \
-        ntp \
-        git \
-        ca-certificates \
-        procps \
-        uuid-runtime \
-        jq \
-        curl \
-        cmake \
-        ncurses-dev \
-        libusb-1.0-0 \
-        libusb-1.0-0-dev \
-        gnupg && \
+    build-essential \
+    ca-certificates \
+    cmake \
+    curl \
+    debhelper \
+    git \
+    gnupg \
+    jq \
+    libusb-1.0-0 \
+    libusb-1.0-0-dev \
+    ncurses-dev \
+    ntp \
+    procps \
+    python \
+    python3-dev \
+    uuid-runtime \
+    && \
     git config --global advice.detachedHead false && \
     echo "========== Install mlat-client ==========" && \
     git clone https://github.com/adsbxchange/mlat-client.git /src/mlat-client && \
@@ -68,35 +69,39 @@ RUN set -x && \
     echo "adsbexchange-stats $(git log | head -1)" >> /VERSIONS && \
     mv /src/adsbexchange-stats/json-status /usr/local/bin/json-status && \
     curl -s https://raw.githubusercontent.com/mikenye/deploy-s6-overlay/master/deploy-s6-overlay.sh | sh && \
+    echo "========== Clean up build environment ==========" && \
     apt-get remove -y \
-        build-essential \
-        debhelper \
-        python3-dev \
-        ntp \
-        git \
-        procps \
-        autoconf \
-        automake \
-        binutils \
-        bsdmainutils \
-        bzip2 \
-        cpp \
-        cpp-8 \
-        g++ \
-        g++-8 \
-        gcc \
-        gcc-8 \
-        git \
-        make \
-        man-db \
-        sensible-utils \
-        ncurses-dev \
-        libusb-1.0-0-dev \
-        xz-utils \
-        gnupg && \
+    autoconf \
+    automake \
+    binutils \
+    bsdmainutils \
+    build-essential \
+    bzip2 \
+    cpp \
+    cpp-8 \
+    debhelper \
+    g++ \
+    g++-8 \
+    gcc \
+    gcc-8 \
+    git \
+    git \
+    gnupg \
+    libusb-1.0-0-dev \
+    make \
+    man-db \
+    ncurses-dev \
+    ntp \
+    procps \
+    python3-dev \
+    sensible-utils \
+    xz-utils \
+    && \
     apt-get purge -y && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/* /src && \
+    echo "========== Done! ==========" && \
+    echo "========== Versions of all items built ==========" && \
     cat /VERSIONS
 
 COPY etc/ /etc/
