@@ -136,8 +136,6 @@ services:
       - TZ="Australia/Perth"
       - LAT=-33.33333
       - LONG=111.111111
-    volumes:
-      - /var/cache/piaware:/var/cache/piaware
 
   adsbexchange:
     image: mikenye/adsbexchange
