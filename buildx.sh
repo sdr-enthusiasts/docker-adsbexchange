@@ -14,7 +14,7 @@ docker build -t "${REPO}/${IMAGE}:temp" .
 docker run --rm --entrypoint cat "${REPO}/${IMAGE}:temp" /VERSIONS > "/tmp/${REPO}_${IMAGE}.current"
 docker run --rm --entrypoint cat "${REPO}/${IMAGE}:latest" /VERSIONS > "/tmp/${REPO}_${IMAGE}.latest"
 
-# Chevk for version changes between this build and :latest
+# Check for version changes between this build and :latest
 echo ""
 echo "Version changes:"
 echo ""
