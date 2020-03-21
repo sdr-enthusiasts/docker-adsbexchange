@@ -178,3 +178,7 @@ This container required no incoming ports to be mapped.
 ## Logging
 
 * All processes are logged to the container's stdout, and can be viewed with `docker logs [-f] container`.
+
+## Getting help
+
+Please feel free to [open an issue on the project's GitHub](https://github.com/mikenye/docker-adsbexchange/issues).
