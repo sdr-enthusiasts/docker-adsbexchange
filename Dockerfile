@@ -2,6 +2,7 @@ FROM debian:stable-slim
 
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
     BEASTPORT=30005 \
+    BRANCH_READSB=v3.8.2 \
     LOG_INTERVAL=900 \
     UUID_FILE="/boot/adsbx-uuid"
 
@@ -56,7 +57,7 @@ RUN set -x && \
     echo "========== Install readsb ==========" && \
     git clone https://github.com/Mictronics/readsb.git /src/readsb && \
     cd /src/readsb && \
-    export BRANCH_READSB=$(git tag --sort="-creatordate" | head -1) && \
+    #export BRANCH_READSB=$(git tag --sort="-creatordate" | head -1) && \
     git checkout tags/"${BRANCH_READSB}" && \
     echo "readsb ${BRANCH_RTLSDR}" >> /VERSIONS && \
     make -j RTLSDR=yes && \
