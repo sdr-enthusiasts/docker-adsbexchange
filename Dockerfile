@@ -69,6 +69,8 @@ RUN set -x && \
     cd /src/adsbexchange-stats && \
     echo "adsbexchange-stats $(git log | head -1)" >> /VERSIONS && \
     mv /src/adsbexchange-stats/json-status /usr/local/bin/json-status && \
+    mkdir -p /run/adsbexchange-stats && \
+    echo "========== Deploy s6-overlay ==========" && \
     curl -s https://raw.githubusercontent.com/mikenye/deploy-s6-overlay/master/deploy-s6-overlay.sh | sh && \
     echo "========== Clean up build environment ==========" && \
     apt-get remove -y \
