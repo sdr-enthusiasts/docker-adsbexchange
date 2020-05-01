@@ -25,6 +25,7 @@ RUN set -x && \
     python \
     python3-dev \
     uuid-runtime \
+    dnsutils \
     && \
     git config --global advice.detachedHead false && \
     echo "========== Install mlat-client ==========" && \
