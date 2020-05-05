@@ -12,4 +12,5 @@ exec \
     --lon "${LONG}" \
     --alt "${ALT}" \
     --results beast,connect,"${BEASTHOST}:${BEASTPORT}" \
+    --results beast,listen,30105 \
     --privacy 2>&1 | awk -W interactive '{print "[mlat-client] " $0}'

@@ -2,7 +2,7 @@ FROM debian:stable-slim
 
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
     BEASTPORT=30005 \
-    BRANCH_READSB=v3.8.2 \
+    BRANCH_READSB=v3.8.3 \
     LOG_INTERVAL=900 \
     UUID_FILE="/boot/adsbx-uuid"
 
