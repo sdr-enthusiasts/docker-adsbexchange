@@ -2,7 +2,7 @@ FROM debian:stable-slim
 
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
     BEASTPORT=30005 \
-    BRANCH_READSB=v3.8.2 \
+    BRANCH_READSB=v3.8.3 \
     LOG_INTERVAL=900 \
     UUID_FILE="/boot/adsbx-uuid"
 
@@ -60,7 +60,7 @@ RUN set -x && \
     cd /src/readsb && \
     #export BRANCH_READSB=$(git tag --sort="-creatordate" | head -1) && \
     git checkout tags/"${BRANCH_READSB}" && \
-    echo "readsb ${BRANCH_RTLSDR}" >> /VERSIONS && \
+    echo "readsb ${BRANCH_READSB}" >> /VERSIONS && \
     make -j RTLSDR=yes && \
     mv viewadsb /usr/local/bin/ && \
     mv readsb /usr/local/bin/ && \

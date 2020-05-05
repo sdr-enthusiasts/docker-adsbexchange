@@ -16,29 +16,6 @@ For more information on adsbexchange, see here: [ADSBExchange How-To-Feed](https
 
 * Thanks to [ShoGinn](https://github.com/ShoGinn) for many contributions to the 20200320 release and tidy up of code & readme.
 
-## Changelog
-
-### 20200320
-
-* Linting and tidy up (thanks ShoGinn)
-
-### 20200227
-
-* Revert from `master` to `0.6.0` branch for `rtl-sdr` due to compilation problems
-* Implement single `Dockerfile` for multi-architecture
-* Change s6-overlay deployment method
-* Implement buildx
-
-### 20200212
-
-* Change data submission method from `socat` to `readsb` (requested in [Issue #1](https://github.com/mikenye/docker-adsbexchange/issues/1#issue-563773894))
-* Add [adsbxchange/adsbexchange-stats](https://github.com/adsbxchange/adsbexchange-stats) (suggested in [Issue #1](https://github.com/mikenye/docker-adsbexchange/issues/1#issuecomment-585067817))
-* Add ability to pass a static site UUID via environment variable
-
-### 20200204
-
-* Original image
-
 ## Multi Architecture Support
 
 Currently, this image should pull and run on the following architectures:
@@ -171,7 +148,9 @@ There are a series of available environment variables:
 
 ## Ports
 
-This container required no incoming ports to be mapped.
+| Port  | Purpose |
+| ----- | ------- |
+| 30105 | MLAT data in Beast format for tools such as [`graphs1090`](https://github.com/mikenye/docker-graphs1090)
 
 ## Logging
 
@@ -180,3 +159,30 @@ This container required no incoming ports to be mapped.
 ## Getting help
 
 Please feel free to [open an issue on the project's GitHub](https://github.com/mikenye/docker-adsbexchange/issues).
+
+## Changelog
+
+### 20200505
+
+* Configure `mlat-client` to listen on TCP port `30105` for use with tools such as [`graphs1090`](https://github.com/mikenye/docker-graphs1090).
+
+### 20200320
+
+* Linting and tidy up (thanks ShoGinn)
+
+### 20200227
+
+* Revert from `master` to `0.6.0` branch for `rtl-sdr` due to compilation problems
+* Implement single `Dockerfile` for multi-architecture
+* Change s6-overlay deployment method
+* Implement buildx
+
+### 20200212
+
+* Change data submission method from `socat` to `readsb` (requested in [Issue #1](https://github.com/mikenye/docker-adsbexchange/issues/1#issue-563773894))
+* Add [adsbxchange/adsbexchange-stats](https://github.com/adsbxchange/adsbexchange-stats) (suggested in [Issue #1](https://github.com/mikenye/docker-adsbexchange/issues/1#issuecomment-585067817))
+* Add ability to pass a static site UUID via environment variable
+
+### 20200204
+
+* Original image
