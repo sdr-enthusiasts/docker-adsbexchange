@@ -164,7 +164,8 @@ Please feel free to [open an issue on the project's GitHub](https://github.com/m
 
 ### 20200505
 
-* Configure `mlat-client` to listen on TCP port `30105` for use with tools such as [`graphs1090`](https://github.com/mikenye/docker-graphs1090).
+* Configure `mlat-client` to listen on TCP port `30105` for use with tools such as [`graphs1090`](https://github.com/mikenye/docker-graphs1090)
+* Bump `readsb` version to `v3.8.3`
 
 ### 20200320
 
