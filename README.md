@@ -2,14 +2,17 @@
 
 Docker container to feed ADSB data into adsbexchange. Designed to work in tandem with mikenye/piaware or another BEAST provider. Builds and runs on x86_64, arm32v7 & arm64v8 (see below).
 
-The container pulls ModeS/BEAST information from the [mikenye/piaware](https://hub.docker.com/repository/docker/mikenye/piaware) container (or another host providing ModeS/BEAST data, for example [mikenye/readsb](https://hub.docker.com/repository/docker/mikenye/readsb)), and sends data to adsbexchange.
+The container pulls ADS-B information from the [mikenye/readsb](https://hub.docker.com/repository/docker/mikenye/readsb) container (or another host providing data in BEAST format) and sends data to adsbexchange.
 
 For more information on adsbexchange, see here: [ADSBExchange How-To-Feed](https://adsbexchange.com/how-to-feed/). This container uses a modified version of the "script method" outlines on that page.
 
 ## Supported tags and respective Dockerfiles
 
-* `latest` should always contain the latest released versions of `rtl-sdr`, `mlat-client`, `readsb` and `adsbexchange-stats`. This image is built nightly from the [`master` branch](https://github.com/mikenye/docker-adsbexchange/tree/master) [`Dockerfile`](https://github.com/mikenye/docker-adsbexchange/blob/master/Dockerfile) for all supported architectures.
-* `development` ([`master` branch](https://github.com/mikenye/docker-adsbexchange/tree/master), [`Dockerfile`](https://github.com/mikenye/docker-adsbexchange/blob/master/Dockerfile), `amd64` architecture only, built on commit, not recommended for production)
+* `latest` is built nightly from the [`master` branch](https://github.com/mikenye/docker-adsbexchange/tree/master) [`Dockerfile`](https://github.com/mikenye/docker-adsbexchange/blob/master/Dockerfile) for all supported architectures. It contains:
+  * Versions of `mlat-client` and `readsb` specified in [adsbxchange/adsb-exchange/setup.sh](https://github.com/adsbxchange/adsb-exchange/blob/master/setup.sh)
+  * Latest version of `adsbexchange-stats`
+  * Latest released version of `rtl-sdr`
+* `development` ([`dev` branch](https://github.com/mikenye/docker-adsbexchange/tree/master), [`Dockerfile`](https://github.com/mikenye/docker-adsbexchange/blob/master/Dockerfile), `amd64` architecture only, built on commit, not recommended for production)
 * Specific version and architecture tags are available if required, however these are not regularly updated. It is generally recommended to run `latest`.
 
 ## Contributors
@@ -21,26 +24,29 @@ For more information on adsbexchange, see here: [ADSBExchange How-To-Feed](https
 Currently, this image should pull and run on the following architectures:
 
 * ```amd64```: Linux x86-64
+* ```arm32v6```: ARMv6 32-bit (Pi Zero)
 * ```arm32v7```, ```armv7l```: ARMv7 32-bit (Odroid HC1/HC2/XU4, RPi 2/3/4)
 * ```arm64v8```, ```aarch64```: ARMv8 64-bit (RPi 4)
 
-## Configuring `mikenye/piaware` Container
+## Configuring `mikenye/readsb` Container
 
-If you're using this container with the `mikenye/piaware` container to provide ModeS/BEAST data, you'll need to ensure you've opened port 30005 into the `mikenye/piaware` container, so this container can connect to it.
+If you're using this container with the `mikenye/readsb` container to provide ModeS/BEAST data, you'll need to ensure you've opened port 30005 into the `mikenye/readsb` container, so this container can connect to it.
 
-The IP address or hostname of the docker host running the `mikenye/piaware` container should be passed to the `mikenye/adsbexchange` container via the `BEASTHOST` environment variable shown below. The port can be changed from the default of 30005 with the optional `BEASTPORT` environment variable.
+The IP address or hostname of the docker host running the `mikenye/readsb` container should be passed to the `mikenye/adsbexchange` container via the `BEASTHOST` environment variable shown below. The port can be changed from the default of 30005 with the optional `BEASTPORT` environment variable if required.
 
 The latitude and longitude of your antenna must be passed via the `LAT` and `LONG` environment variables respectively.
 
 The altitude of your antenna must be passed via the `ANT` environment variable respectively. Defaults to metres, but units may specified with a 'ft' or 'm' suffix.
 
+A UUID for this feeder must be passed via the `UUID` environment variable (see below).
+
 Lastly, you should specify a site name via the `SITENAME` environment variable. This field supports letters, numbers, `-` & `_` only. Any other characters will be stripped upon container initialization.
 
 ## Generating a site UUID Number
 
-First-time users are encouraged to generate a static UUID.
+First-time users should generate a static UUID.
 
-In order to generate a site UUID, initially run the container with the following command:
+To do this, run a temporary container with the following command:
 
 ```shell
 docker run --rm -it --entrypoint uuidgen mikenye/adsbexchange -t
@@ -49,8 +55,6 @@ docker run --rm -it --entrypoint uuidgen mikenye/adsbexchange -t
 Take note of the UUID returned. You should pass it as the `UUID` environment variable when running the container.
 
 You will be able to view your site's stats by visiting `https://www.adsbexchange.com/api/feeders/?feed=YOUR-UUID-HERE`. The link with your UUID will be printed to the container log when the container starts.
-
-If you don't generate a static UUID, a dynamic UUID will be created when the container starts.
 
 ## Up-and-Running with `docker run`
 
@@ -91,66 +95,31 @@ services:
       - UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ```
 
-## Up-and-Running with Docker Compose, including `mikenye/piaware`
+## Up-and-Running with Docker Compose, including `mikenye/readsb`
 
-```docker-compose
-version: '2.0'
-
-services:
-
-  piaware:
-    image: mikenye/piaware:latest
-    tty: true
-    container_name: piaware
-    mac_address: de:ad:be:ef:13:37
-    restart: always
-    devices:
-      - /dev/bus/usb/001/004:/dev/bus/usb/001/004
-    ports:
-      - 8080:8080
-      - 30005:30005
-    environment:
-      - TZ="Australia/Perth"
-      - LAT=-33.33333
-      - LONG=111.111111
-
-  adsbexchange:
-    image: mikenye/adsbexchange
-    tty: true
-    container_name: adsbx
-    restart: always
-    environment:
-      - BEASTHOST=beasthost
-      - TZ=Australia/Perth
-      - LAT=-33.33333
-      - LONG=111.11111
-      - ALT=50m
-      - SITENAME=My_Cool_ADSB_Receiver
-      - UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-```
-
-For an explanation of the `mikenye/piaware` image's configuration, see that image's readme.
+See [Guide to ADS-B Data Reception, Decoding & Sharing with RTLSDR & Docker](https://github.com/mikenye/docker-readsb/wiki/Guide-to-ADS-B-Data-Receiving,-Decoding-and-Sharing,-Leveraging-RTLSDR-and-Docker)
 
 ## Runtime Environment Variables
 
 There are a series of available environment variables:
 
-| Environment Variable | Purpose                         | Default |
-| -------------------- | ------------------------------- | ------- |
-| `BEASTHOST`          | Required. IP/Hostname of a Mode-S/BEAST provider (dump1090) | |
-| `BEASTPORT`          | Optional. TCP port number of Mode-S/BEAST provider (dump1090) | 30005 |
-| `TZ`                 | Your local timezone (optional)  | GMT     |
-| `LAT`                | The latitude of the antenna (required) | |
-| `LONG`               | The longitude of the antenna (required) | |
-| `ALT`                | The altitude of the antenna ('m' or 'ft' suffix) | |
-| `SITENAME`           | The name of your site (A-Z, a-z, `-`, `_`) | |
-| `UUID`               | Your static UUID (optional, but recommended) | dynamically generated |
+| Environment Variable | Purpose                                                                  | Default |
+| -------------------- | ------------------------------------------------------------------------ | ------- |
+| `BEASTHOST`          | Required. IP/Hostname of a Mode-S/BEAST provider (dump1090)              |         |
+| `BEASTPORT`          | Optional. TCP port number of Mode-S/BEAST provider (dump1090)            | `30005`   |
+| `UUID`               | Required. Your static UUID                                               |         |
+| `LAT`                | Required. The latitude of the antenna                                    |         |
+| `LONG`               | Required. The longitude of the antenna                                   |         |
+| `ALT`                | Required. The altitude of the antenna ('m' or 'ft' suffix)               |         |
+| `SITENAME`           | Required. The name of your site (A-Z, a-z, `-`, `_`)                     |         |
+| `TZ`                 | Optional. Your local timezone                                            | `GMT`     |
+| `REDUCE_INTERVAL`    | Optional. How often beastreduce data is transmitted to ADSBExchange. For low bandwidth feeds, this can be increased to `5` or even `10` | `0.5`     |
 
 ## Ports
 
 | Port  | Purpose |
 | ----- | ------- |
-| 30105 | MLAT data in Beast format for tools such as [`graphs1090`](https://github.com/mikenye/docker-graphs1090)
+| `30105` | MLAT data in Beast format for tools such as [`graphs1090`](https://github.com/mikenye/docker-graphs1090) and/or [`tar1090`](https://github.com/mikenye/docker-tar1090)
 
 ## Logging
 
@@ -161,6 +130,15 @@ There are a series of available environment variables:
 Please feel free to [open an issue on the project's GitHub](https://github.com/mikenye/docker-adsbexchange/issues).
 
 ## Changelog
+
+### 20200508
+
+* Change `readsb` over to adsbexchange fork
+* Change `readsb` & `mlat-client` versions to branches specified in <https://github.com/adsbxchange/adsb-exchange/blob/master/setup.sh>
+* Change `readsb` `--write-json` path to `/run/adsbexchange-feed` to work with updated `adsbexchange-stats`
+* Add `REDUCE_INTERVAL` environment variable to change frequency of data submitted to adsbexchange
+* Make `UUID` required
+* Add support for `arm32v6` architecture (for Pi Zero users)
 
 ### 20200505
 

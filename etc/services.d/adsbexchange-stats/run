@@ -2,4 +2,5 @@
 # shellcheck shell=bash
 
 exec \
-    /usr/local/bin/json-status 2>&1 | awk -W interactive '{print "[adsbexchange-stats] " $0}'
+    /usr/local/bin/json-status 2>&1 \
+    | awk -W interactive '{print "[adsbexchange-stats] " $0}'

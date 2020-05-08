@@ -8,7 +8,7 @@ exec \
   --quiet \
   --net-heartbeat 60 \
   --net-ro-size 1280 \
-  --net-beast-reduce-interval 1 \
+  --net-beast-reduce-interval "${REDUCE_INTERVAL}" \
   --net-connector feed.adsbexchange.com,30005,beast_reduce_out \
   --net-connector "${BEASTHOST}","${BEASTPORT}",beast_in \
   --net-ro-interval 0.2 \
@@ -18,5 +18,5 @@ exec \
   --net-bi-port 0 \
   --net-bo-port 0 \
   --stats-every="${LOG_INTERVAL}" \
-  --write-json=/run/readsb \
+  --write-json="${ADSBX_JSON_PATH}" \
   2>&1 | awk -W interactive '{print "[adsbexchange-feed] " $0}'
