@@ -55,7 +55,7 @@ RUN set -x && \
     echo "blacklist rtl2832" >> /etc/modprobe.d/no-rtl.conf && \
     echo "blacklist rtl2830" >> /etc/modprobe.d/no-rtl.conf && \
     echo "========== Install readsb ==========" && \
-    git clone https://github.com/Mictronics/readsb.git /src/readsb && \
+    git clone https://github.com/adsbxchange/readsb.git /src/readsb && \
     cd /src/readsb && \
     #export BRANCH_READSB=$(git tag --sort="-creatordate" | head -1) && \
     git checkout tags/"${BRANCH_READSB}" && \
