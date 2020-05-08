@@ -1,6 +1,6 @@
 # mikenye/adsbexchange
 
-Docker container to feed ADSB data into adsbexchange. Designed to work in tandem with mikenye/piaware or another BEAST provider. Builds and runs on x86_64, arm32v7 & arm64v8 (see below).
+Docker container to feed ADSB data into adsbexchange. Designed to work in tandem with mikenye/piaware or another BEAST provider. Builds and runs on x86_64, arm32v6, arm32v7 & arm64v8 (see below).
 
 The container pulls ADS-B information from the [mikenye/readsb](https://hub.docker.com/repository/docker/mikenye/readsb) container (or another host providing data in BEAST format) and sends data to adsbexchange.
 

@@ -11,7 +11,7 @@ export DOCKER_CLI_EXPERIMENTAL="enabled"
 docker buildx use homecluster
 
 # build temp image to get versions
-if [ ! -z $FORCEPUSH ]; then
+if [ -z $FORCEPUSH ]; then
   docker build -t "${REPO}/${IMAGE}:temp" .
   docker run --rm --entrypoint cat "${REPO}/${IMAGE}:temp" /VERSIONS > "/tmp/${REPO}_${IMAGE}.current"
   docker run --rm --entrypoint cat "${REPO}/${IMAGE}:latest" /VERSIONS > "/tmp/${REPO}_${IMAGE}.latest"
