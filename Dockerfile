@@ -15,6 +15,7 @@ RUN set -x && \
     cmake \
     curl \
     debhelper \
+    file \
     git \
     gnupg \
     jq \
@@ -86,6 +87,7 @@ RUN set -x && \
     cpp \
     cpp-8 \
     debhelper \
+    file \
     g++ \
     g++-8 \
     gcc \
