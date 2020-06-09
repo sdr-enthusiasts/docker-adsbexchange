@@ -62,7 +62,7 @@ RUN set -x && \
     echo "========== Install readsb ==========" && \
     git clone https://github.com/adsbxchange/readsb.git /src/readsb && \
     cd /src/readsb && \
-    git checkout "${BRANCH_READSB}" && \
+    git checkout "${BRANCH_READSB}" || true && \
     echo "readsb ${BRANCH_READSB}" >> /VERSIONS && \
     #make -j RTLSDR=yes && \
     make && \
