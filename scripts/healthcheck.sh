@@ -37,7 +37,7 @@ fi
 
 # make sure we're feeding beast/beastreduce data to adsbexchange
 netstat -an | grep ESTABLISHED | grep 30005 | grep $(dig +short feed.adsbexchange.com) > /dev/null
-if [ $? -ne 0 ]; then
+if [ $? -eq 0 ]; then
     echo "established beast connection to feed.adsbexchange.com:30005. HEALTHY"
 else
     echo "no established beast connection to feed.adsbexchange.com:30005. UNHEALTHY"
@@ -46,7 +46,7 @@ fi
 
 # make sure we're feeding MLAT data to adsbexchange
 netstat -an | grep ESTABLISHED | grep 31090 | grep $(dig +short feed.adsbexchange.com) > /dev/null
-if [ $? -ne 0 ]; then
+if [ $? -eq 0 ]; then
     echo "established mlat connection to feed.adsbexchange.com:31090. HEALTHY"
 else
     echo "no established mlat connection to feed.adsbexchange.com:31090. UNHEALTHY"
@@ -55,7 +55,7 @@ fi
 
 # make sure we're listening for beast 
 netstat -an | grep LISTEN | grep 30005 > /dev/null
-if [ $? -ne 0 ]; then
+if [ $? -eq 0 ]; then
     echo "listening for beast connections on port 30005. HEALTHY"
 else
     echo "not listening for beast connections on port 30005. UNHEALTHY"
@@ -64,7 +64,7 @@ fi
 
 # make sure we're listening for mlat 
 netstat -an | grep LISTEN | grep 30105 > /dev/null
-if [ $? -ne 0 ]; then
+if [ $? -eq 0 ]; then
     echo "listening for mlat connections on port 30105. HEALTHY"
 else
     echo "not listening for mlat connections on port 30105. UNHEALTHY"
