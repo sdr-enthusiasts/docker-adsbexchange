@@ -119,3 +119,6 @@ COPY etc/ /etc/
 COPY scripts/ /scripts/
 
 ENTRYPOINT [ "/init" ]
+
+# Add healthcheck
+HEALTHCHECK --start-period=30s CMD /scripts/healthcheck.sh
