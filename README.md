@@ -131,6 +131,11 @@ Please feel free to [open an issue on the project's GitHub](https://github.com/m
 
 ## Changelog
 
+### 20200610
+
+* Add docker healthcheck
+* Add architectures `linux/386`
+
 ### 20200508
 
 * Change `readsb` over to adsbexchange fork
