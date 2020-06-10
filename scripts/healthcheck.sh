@@ -76,10 +76,10 @@ SERVICEDIR=/run/s6/services/adsbexchange-feed
 SERVICENAME=$(basename "${SERVICEDIR}")
 SERVICE_DEATHS=$(s6-svdt "${SERVICEDIR}" | grep -v "exitcode 0" | wc -l)
 if [ $SERVICE_DEATHS -ge 1 ]; then
-    echo "${SERVICENAME} deaths: $LIGHTTPD_DEATHS. UNHEALTHY"
+    echo "${SERVICENAME} deaths: $SERVICE_DEATHS. UNHEALTHY"
     EXITCODE=1
 else
-    echo "${SERVICENAME} deaths: $LIGHTTPD_DEATHS. HEALTHY"
+    echo "${SERVICENAME} deaths: $SERVICE_DEATHS. HEALTHY"
 fi
 s6-svdt-clear "${SERVICEDIR}"
 
@@ -88,10 +88,10 @@ SERVICEDIR=/run/s6/services/adsbexchange-stats
 SERVICENAME=$(basename "${SERVICEDIR}")
 SERVICE_DEATHS=$(s6-svdt "${SERVICEDIR}" | grep -v "exitcode 0" | wc -l)
 if [ $SERVICE_DEATHS -ge 1 ]; then
-    echo "${SERVICENAME} deaths: $LIGHTTPD_DEATHS. UNHEALTHY"
+    echo "${SERVICENAME} deaths: $SERVICE_DEATHS. UNHEALTHY"
     EXITCODE=1
 else
-    echo "${SERVICENAME} deaths: $LIGHTTPD_DEATHS. HEALTHY"
+    echo "${SERVICENAME} deaths: $SERVICE_DEATHS. HEALTHY"
 fi
 s6-svdt-clear "${SERVICEDIR}"
 
@@ -100,10 +100,10 @@ SERVICEDIR=/run/s6/services/healthcheck
 SERVICENAME=$(basename "${SERVICEDIR}")
 SERVICE_DEATHS=$(s6-svdt "${SERVICEDIR}" | grep -v "exitcode 0" | wc -l)
 if [ $SERVICE_DEATHS -ge 1 ]; then
-    echo "${SERVICENAME} deaths: $LIGHTTPD_DEATHS. UNHEALTHY"
+    echo "${SERVICENAME} deaths: $SERVICE_DEATHS. UNHEALTHY"
     EXITCODE=1
 else
-    echo "${SERVICENAME} deaths: $LIGHTTPD_DEATHS. HEALTHY"
+    echo "${SERVICENAME} deaths: $SERVICE_DEATHS. HEALTHY"
 fi
 s6-svdt-clear "${SERVICEDIR}"
 
@@ -112,10 +112,10 @@ SERVICEDIR=/run/s6/services/mlat-client
 SERVICENAME=$(basename "${SERVICEDIR}")
 SERVICE_DEATHS=$(s6-svdt "${SERVICEDIR}" | grep -v "exitcode 0" | wc -l)
 if [ $SERVICE_DEATHS -ge 1 ]; then
-    echo "${SERVICENAME} deaths: $LIGHTTPD_DEATHS. UNHEALTHY"
+    echo "${SERVICENAME} deaths: $SERVICE_DEATHS. UNHEALTHY"
     EXITCODE=1
 else
-    echo "${SERVICENAME} deaths: $LIGHTTPD_DEATHS. HEALTHY"
+    echo "${SERVICENAME} deaths: $SERVICE_DEATHS. HEALTHY"
 fi
 s6-svdt-clear "${SERVICEDIR}"
 
