@@ -16,6 +16,7 @@ RUN set -x && \
         cmake \
         curl \
         debhelper \
+        dnsutils \
         file \
         git \
         gnupg \
