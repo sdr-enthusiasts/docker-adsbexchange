@@ -4,7 +4,7 @@
 VERSION=$(date +%Y%m%d)
 REPO=mikenye
 IMAGE=adsbexchange
-PLATFORMS="linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64"
+PLATFORMS="linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64"
 
 docker context use x86_64
 export DOCKER_CLI_EXPERIMENTAL="enabled"
@@ -31,12 +31,13 @@ fi
 if [ "$DIFFEXITCODE" -ne "0" ]; then
   # Build the image using buildx
   docker buildx build -t "${REPO}/${IMAGE}:${VERSION}" --compress --push --platform "${PLATFORMS}" .
-  docker buildx build -t "${REPO}/${IMAGE}:latest" --compress --push --platform "${PLATFORMS}" .
 else
   echo "No version changes, not building/pushing."
   echo "To override, set FORCEPUSH=1."
   echo ""
 fi
+
+docker buildx build -t "${REPO}/${IMAGE}:latest" --compress --push --platform "${PLATFORMS}" .
 
 # Clean up
 rm "/tmp/${REPO}_${IMAGE}.current" "/tmp/${REPO}_${IMAGE}.latest"
