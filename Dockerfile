@@ -23,6 +23,7 @@ RUN set -x && \
         libusb-1.0-0 \
         libusb-1.0-0-dev \
         ncurses-dev \
+        net-tools \
         ntp \
         procps \
         python \
