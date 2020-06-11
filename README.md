@@ -132,6 +132,10 @@ Please feel free to [open an issue on the project's GitHub](https://github.com/m
 
 ## Changelog
 
+### 20200611
+
+* Add `PRIVATE_MLAT` environment variable (thanks to @kyleinprogress!)
+
 ### 20200610
 
 * Add docker healthcheck
