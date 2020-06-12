@@ -110,7 +110,7 @@ There are a series of available environment variables:
 | `SITENAME`           | Required. The name of your site (A-Z, a-z, `-`, `_`)                     |         |
 | `TZ`                 | Optional. Your local timezone                                            | `GMT`     |
 | `REDUCE_INTERVAL`    | Optional. How often beastreduce data is transmitted to ADSBExchange. For low bandwidth feeds, this can be increased to `5` or even `10` | `0.5`     |
-| `PRIVATE_MLAT`       | Optional. Setting this to false will allow your feeder to be shown on the [ADS-B Exchange Feeder Map](https://map.adsbexchange.com/mlat-map/)| `true`     |
+| `PRIVATE_MLAT`       | Optional. Setting this to false will allow your feeder to be shown on the [ADS-B Exchange Feeder Map](https://map.adsbexchange.com/mlat-map/)| `false`     |
 
 ## Ports
 
@@ -127,6 +127,10 @@ There are a series of available environment variables:
 Please feel free to [open an issue on the project's GitHub](https://github.com/mikenye/docker-adsbexchange/issues).
 
 ## Changelog
+
+### 20200612
+
+* Set default of `PRIVATE_MLAT` to `false`
 
 ### 20200611
 
