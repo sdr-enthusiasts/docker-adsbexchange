@@ -65,14 +65,14 @@ docker run \
  -e LAT=-33.33333 \
  -e LONG=111.11111 \
  -e ALT=50m \
- -e SITENAME=My_Cool_ADSB_Receiver
- -e UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+ -e SITENAME=My_Cool_ADSB_Receiver \
+ -e UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx \
  mikenye/adsbexchange
 ```
 
 ## Up-and-Running with Docker Compose
 
-```docker-compose
+```json
 version: '2.0'
 
 services:
