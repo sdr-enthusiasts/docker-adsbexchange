@@ -15,10 +15,6 @@ For more information on adsbexchange, see here: [ADSBExchange How-To-Feed](https
 * `development` ([`dev` branch](https://github.com/mikenye/docker-adsbexchange/tree/master), [`Dockerfile`](https://github.com/mikenye/docker-adsbexchange/blob/master/Dockerfile), `amd64` architecture only, built on commit, not recommended for production)
 * Specific version and architecture tags are available if required, however these are not regularly updated. It is generally recommended to run `latest`.
 
-## Contributors
-
-* Thanks to [ShoGinn](https://github.com/ShoGinn) for many contributions to the 20200320 release and tidy up of code & readme.
-
 ## Multi Architecture Support
 
 Currently, this image should pull and run on the following architectures:
@@ -69,14 +65,14 @@ docker run \
  -e LAT=-33.33333 \
  -e LONG=111.11111 \
  -e ALT=50m \
- -e SITENAME=My_Cool_ADSB_Receiver
- -e UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+ -e SITENAME=My_Cool_ADSB_Receiver \
+ -e UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx \
  mikenye/adsbexchange
 ```
 
 ## Up-and-Running with Docker Compose
 
-```docker-compose
+```json
 version: '2.0'
 
 services:
@@ -114,7 +110,7 @@ There are a series of available environment variables:
 | `SITENAME`           | Required. The name of your site (A-Z, a-z, `-`, `_`)                     |         |
 | `TZ`                 | Optional. Your local timezone                                            | `GMT`     |
 | `REDUCE_INTERVAL`    | Optional. How often beastreduce data is transmitted to ADSBExchange. For low bandwidth feeds, this can be increased to `5` or even `10` | `0.5`     |
-| `PRIVATE_MLAT`       | Optional. Setting this to false will allow your feeder to be shown on the [ADS-B Exchange Feeder Map](https://map.adsbexchange.com/mlat-map/)| `true`     |
+| `PRIVATE_MLAT`       | Optional. Setting this to true will prevent feeder being shown on the [ADS-B Exchange Feeder Map](https://map.adsbexchange.com/mlat-map/)| `false`     |
 
 ## Ports
 
@@ -131,6 +127,10 @@ There are a series of available environment variables:
 Please feel free to [open an issue on the project's GitHub](https://github.com/mikenye/docker-adsbexchange/issues).
 
 ## Changelog
+
+### 20200612
+
+* Set default of `PRIVATE_MLAT` to `false`
 
 ### 20200611
 
@@ -158,6 +158,7 @@ Please feel free to [open an issue on the project's GitHub](https://github.com/m
 ### 20200320
 
 * Linting and tidy up (thanks ShoGinn)
+* Thanks to [ShoGinn](https://github.com/ShoGinn) for many contributions to the 20200320 release and tidy up of code & readme.
 
 ### 20200227
 
