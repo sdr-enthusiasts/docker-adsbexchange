@@ -111,7 +111,7 @@ There are a series of available environment variables:
 | `TZ`                 | Optional. Your local timezone                                            | `GMT`     |
 | `REDUCE_INTERVAL`    | Optional. How often beastreduce data is transmitted to ADSBExchange. For low bandwidth feeds, this can be increased to `5` or even `10` | `0.5`     |
 | `PRIVATE_MLAT`       | Optional. Setting this to true will prevent feeder being shown on the [ADS-B Exchange Feeder Map](https://map.adsbexchange.com/mlat-map/)| `false`     |
-| `MLAT_INPUT_TYPE`    | Optional. Sets the input receiver type.                                  | `dump1090` |
+| `MLAT_INPUT_TYPE`    | Optional. Sets the input receiver type. Run `docker run --rm -it --entrypoint mlat-client mikenye/adsbexchange --help` and see `--input-type` for valid values. | `dump1090` |
 
 ## Ports
 
@@ -128,6 +128,10 @@ There are a series of available environment variables:
 Please feel free to [open an issue on the project's GitHub](https://github.com/mikenye/docker-adsbexchange/issues).
 
 ## Changelog
+
+### 20200627
+
+* Add `MLAT_INPUT_TYPE` - Expose `mlat-client`'s `--input-type`, for people using alternative ADS-B receivers.
 
 ### 20200612
 
