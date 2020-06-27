@@ -111,6 +111,7 @@ There are a series of available environment variables:
 | `TZ`                 | Optional. Your local timezone                                            | `GMT`     |
 | `REDUCE_INTERVAL`    | Optional. How often beastreduce data is transmitted to ADSBExchange. For low bandwidth feeds, this can be increased to `5` or even `10` | `0.5`     |
 | `PRIVATE_MLAT`       | Optional. Setting this to true will prevent feeder being shown on the [ADS-B Exchange Feeder Map](https://map.adsbexchange.com/mlat-map/)| `false`     |
+| `MLAT_INPUT_TYPE`    | Optional. Sets the input receiver type.                                  | `dump1090` |
 
 ## Ports
 

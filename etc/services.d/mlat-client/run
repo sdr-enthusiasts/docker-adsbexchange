@@ -2,7 +2,7 @@
 # shellcheck shell=bash
 
 MLAT_CMD="mlat-client"
-MLAT_PARAM=(--input-type beast)
+MLAT_PARAM=(--input-type "${MLAT_INPUT_TYPE}")
 MLAT_PARAM+=(--no-udp)
 MLAT_PARAM+=(--input-connect "${BEASTHOST}:${BEASTPORT}")
 MLAT_PARAM+=(--server feed.adsbexchange.com:31090)

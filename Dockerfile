@@ -6,7 +6,8 @@ ENV ADSBX_JSON_PATH="/run/adsbexchange-feed" \
     REDUCE_INTERVAL="0.5" \
     S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
     UUID_FILE="/boot/adsbx-uuid" \
-    PRIVATE_MLAT="false"
+    PRIVATE_MLAT="false" \
+    MLAT_INPUT_TYPE="dump1090"
 
 RUN set -x && \
     apt-get update -y && \
