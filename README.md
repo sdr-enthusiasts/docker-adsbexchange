@@ -106,7 +106,7 @@ There are a series of available environment variables:
 | `UUID`               | Required. Your static UUID                                               |         |
 | `LAT`                | Required. The latitude of the antenna                                    |         |
 | `LONG`               | Required. The longitude of the antenna                                   |         |
-| `ALT`                | Required. The altitude of the antenna ('m' or 'ft' suffix)               |         |
+| `ALT`                | Required. The altitude of the antenna above sea level. If positive (above sea level), must include either 'm' or 'ft' suffix to indicate metres or feet. If negative (below sea level), must have no suffix, and the value is interpreted in metres.  |         |
 | `SITENAME`           | Required. The name of your site (A-Z, a-z, `-`, `_`)                     |         |
 | `TZ`                 | Optional. Your local timezone                                            | `GMT`     |
 | `REDUCE_INTERVAL`    | Optional. How often beastreduce data is transmitted to ADSBExchange. For low bandwidth feeds, this can be increased to `5` or even `10` | `0.5`     |
