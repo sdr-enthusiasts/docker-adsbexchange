@@ -21,7 +21,7 @@ if [ -f "/run/adsbexchange-feed/aircraft.json" ]; then
     fi
 
     # get number of aircraft
-    NUM_AIRCRAFT=$(cat /run/adsbexchange-feed/aircraft.json | jq '.aircraft | length')
+    NUM_AIRCRAFT=$(jq '.aircraft | length' < /run/adsbexchange-feed/aircraft.json)
     if [ "$NUM_AIRCRAFT" -lt 1 ]; then
         echo "total aircraft: $NUM_AIRCRAFT. UNHEALTHY"
         EXITCODE=1
