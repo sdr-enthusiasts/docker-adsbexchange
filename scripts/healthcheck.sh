@@ -74,6 +74,7 @@ fi
 # death count for adsbexchange-feed
 SERVICEDIR=/run/s6/services/adsbexchange-feed
 SERVICENAME=$(basename "${SERVICEDIR}")
+# shellcheck disable=SC2126
 SERVICE_DEATHS=$(s6-svdt "${SERVICEDIR}" | grep -v "exitcode 0" | wc -l)
 if [ $SERVICE_DEATHS -ge 1 ]; then
     echo "${SERVICENAME} error deaths: $SERVICE_DEATHS. UNHEALTHY"
@@ -86,6 +87,7 @@ s6-svdt-clear "${SERVICEDIR}"
 # death count for adsbexchange-stats
 SERVICEDIR=/run/s6/services/adsbexchange-stats
 SERVICENAME=$(basename "${SERVICEDIR}")
+# shellcheck disable=SC2126
 SERVICE_DEATHS=$(s6-svdt "${SERVICEDIR}" | grep -v "exitcode 0" | wc -l)
 if [ $SERVICE_DEATHS -ge 1 ]; then
     echo "${SERVICENAME} error deaths: $SERVICE_DEATHS. UNHEALTHY"
@@ -98,6 +100,7 @@ s6-svdt-clear "${SERVICEDIR}"
 # death count for healthcheck
 SERVICEDIR=/run/s6/services/healthcheck
 SERVICENAME=$(basename "${SERVICEDIR}")
+# shellcheck disable=SC2126
 SERVICE_DEATHS=$(s6-svdt "${SERVICEDIR}" | grep -v "exitcode 0" | wc -l)
 if [ $SERVICE_DEATHS -ge 1 ]; then
     echo "${SERVICENAME} error deaths: $SERVICE_DEATHS. UNHEALTHY"
