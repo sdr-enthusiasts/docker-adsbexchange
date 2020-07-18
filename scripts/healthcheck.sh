@@ -6,7 +6,7 @@ EXITCODE=0
 if [ -f "/run/adsbexchange-feed/aircraft.json" ]; then
 
     # get latest timestamp of readsb json update
-    TIMESTAMP_LAST_READSB_UPDATE=$(cat /run/adsbexchange-feed/aircraft.json | jq '.now')
+    TIMESTAMP_LAST_READSB_UPDATE=$(jq '.now' < /run/adsbexchange-feed/aircraft.json)
 
     # get current timestamp
     TIMESTAMP_NOW=$(date +"%s.%N")
