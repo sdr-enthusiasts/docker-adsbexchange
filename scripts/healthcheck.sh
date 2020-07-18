@@ -36,7 +36,7 @@ else
 fi
 
 # make sure we're feeding beast/beastreduce data to adsbexchange
-if netstat -an | grep ESTABLISHED | grep 30005 | grep $(dig +short feed.adsbexchange.com) > /dev/null; then
+if netstat -an | grep ESTABLISHED | grep 30005 | grep "$(dig +short feed.adsbexchange.com)" > /dev/null; then
     echo "established beast connection to feed.adsbexchange.com:30005. HEALTHY"
 else
     echo "no established beast connection to feed.adsbexchange.com:30005. UNHEALTHY"
@@ -44,7 +44,7 @@ else
 fi
 
 # make sure we're feeding MLAT data to adsbexchange
-if netstat -an | grep ESTABLISHED | grep 31090 | grep $(dig +short feed.adsbexchange.com) > /dev/null; then
+if netstat -an | grep ESTABLISHED | grep 31090 | grep "$(dig +short feed.adsbexchange.com)" > /dev/null; then
     echo "established mlat connection to feed.adsbexchange.com:31090. HEALTHY"
 else
     echo "no established mlat connection to feed.adsbexchange.com:31090. UNHEALTHY"
