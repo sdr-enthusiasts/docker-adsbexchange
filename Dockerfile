@@ -9,6 +9,8 @@ ENV ADSBX_JSON_PATH="/run/adsbexchange-feed" \
     PRIVATE_MLAT="false" \
     MLAT_INPUT_TYPE="dump1090"
 
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 RUN set -x && \
     apt-get update -y && \
     apt-get install -y --no-install-recommends \
@@ -36,15 +38,15 @@ RUN set -x && \
     git config --global advice.detachedHead false && \
     echo "========== Get ADSBX ==========" && \
     git clone https://github.com/adsbxchange/adsb-exchange.git /src/adsb-exchange && \
-    export BRANCH_MLATCLIENT=$(grep -e "^MLAT_VERSION=" /src/adsb-exchange/setup.sh | cut -d "=" -f 2 | tr -d '"') && \
-    export BRANCH_READSB=$(grep -e "^READSB_VERSION=" /src/adsb-exchange/setup.sh | cut -d "=" -f 2 | tr -d '"') && \
+    BRANCH_MLATCLIENT=$(grep -e "^MLAT_VERSION=" /src/adsb-exchange/setup.sh | cut -d "=" -f 2 | tr -d '"') && \
+    BRANCH_READSB=$(grep -e "^READSB_VERSION=" /src/adsb-exchange/setup.sh | cut -d "=" -f 2 | tr -d '"') && \
     echo "========== Install mlat-client ==========" && \
     git clone https://github.com/adsbxchange/mlat-client.git /src/mlat-client && \
-    cd /src/mlat-client && \
+    pushd /src/mlat-client && \
     git checkout "${BRANCH_MLATCLIENT}" && \
     echo "mlat-client ${BRANCH_MLATCLIENT}" >> /VERSIONS && \
     dpkg-buildpackage -b -uc && \
-    cd /src && \
+    pushd /src && \
     dpkg -i mlat-client_*.deb && \
     rm mlat-client_*.deb && \
     # echo "========== Install RTL-SDR ==========" && \
@@ -64,18 +66,21 @@ RUN set -x && \
     # echo "blacklist dvb_usb_rtl28xxu" >> /etc/modprobe.d/no-rtl.conf && \
     # echo "blacklist rtl2832" >> /etc/modprobe.d/no-rtl.conf && \
     # echo "blacklist rtl2830" >> /etc/modprobe.d/no-rtl.conf && \
+    popd && \
+    popd && \
     echo "========== Install readsb ==========" && \
     git clone https://github.com/adsbxchange/readsb.git /src/readsb && \
-    cd /src/readsb && \
+    pushd /src/readsb && \
     git checkout "${BRANCH_READSB}" || true && \
     echo "readsb ${BRANCH_READSB}" >> /VERSIONS && \
     #make -j RTLSDR=yes && \
     make && \
     mv viewadsb /usr/local/bin/ && \
     mv readsb /usr/local/bin/ && \
+    popd && \
     echo "========== Install adsbexchange-stats ==========" && \
     git clone https://github.com/adsbxchange/adsbexchange-stats.git /src/adsbexchange-stats && \
-    cd /src/adsbexchange-stats && \
+    pushd /src/adsbexchange-stats && \
     echo "adsbexchange-stats $(git log | head -1)" >> /VERSIONS && \
     mv /src/adsbexchange-stats/json-status /usr/local/bin/json-status && \
     mkdir -p /run/adsbexchange-stats && \

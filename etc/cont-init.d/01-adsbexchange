@@ -40,8 +40,7 @@ if [ $EXITCODE -ne 0 ]; then
 fi
 
 # Check to make sure ALT includes "m" or "ft" suffix if positive
-echo "${ALT}" | grep -P '(^\-{0}\d+(m{0,1}|ft)$|^-\d+$)' > /dev/null 2>&1
-if [ "$?" -ne "0" ]; then
+if echo "${ALT}" | grep -P '(^\-{0}\d+(m{0,1}|ft)$|^-\d+$)' > /dev/null 2>&1; then
   echo -e "${LIGHTRED}ERROR: ALT should be either:"
   echo -e "  * A positive integer ending in 'm' (for metres) or 'ft' (for feet)'; or"
   echo -e "  * A positive integer with no suffix (for metres)"
@@ -63,4 +62,4 @@ echo "$UUID" > "$UUID_FILE"
 echo -e "${CYAN}Statistics available at: https://www.adsbexchange.com/api/feeders/?feed=${UUID}${NOCOLOR}"
 
 # Ensure $ADSBX_JSON_PATH exists
-mkdir -p ${ADSBX_JSON_PATH}
+mkdir -p "${ADSBX_JSON_PATH}"
