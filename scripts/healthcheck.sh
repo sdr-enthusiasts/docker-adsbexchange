@@ -110,6 +110,7 @@ s6-svdt-clear "${SERVICEDIR}"
 # death count for mlat-client
 SERVICEDIR=/run/s6/services/mlat-client
 SERVICENAME=$(basename "${SERVICEDIR}")
+# shellcheck disable=SC2126
 SERVICE_DEATHS=$(s6-svdt "${SERVICEDIR}" | grep -v "exitcode 0" | wc -l)
 if [ "$SERVICE_DEATHS" -ge 1 ]; then
     echo "${SERVICENAME} error deaths: $SERVICE_DEATHS. UNHEALTHY"
