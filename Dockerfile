@@ -9,6 +9,8 @@ ENV ADSBX_JSON_PATH="/run/adsbexchange-feed" \
     PRIVATE_MLAT="false" \
     MLAT_INPUT_TYPE="dump1090"
 
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 RUN set -x && \
     apt-get update -y && \
     apt-get install -y --no-install-recommends \
