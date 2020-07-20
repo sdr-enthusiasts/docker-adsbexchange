@@ -127,6 +127,8 @@ There are a series of available environment variables:
 
 Please feel free to [open an issue on the project's GitHub](https://github.com/mikenye/docker-adsbexchange/issues).
 
+I also have a [Discord channel](https://discord.gg/sTf9uYF), feel free to [join](https://discord.gg/sTf9uYF) and converse.
+
 ## Changelog
 
 ### 20200627
