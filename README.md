@@ -112,6 +112,11 @@ There are a series of available environment variables:
 | `REDUCE_INTERVAL`    | Optional. How often beastreduce data is transmitted to ADSBExchange. For low bandwidth feeds, this can be increased to `5` or even `10` | `0.5`     |
 | `PRIVATE_MLAT`       | Optional. Setting this to true will prevent feeder being shown on the [ADS-B Exchange Feeder Map](https://map.adsbexchange.com/mlat-map/)| `false`     |
 | `MLAT_INPUT_TYPE`    | Optional. Sets the input receiver type. Run `docker run --rm -it --entrypoint mlat-client mikenye/adsbexchange --help` and see `--input-type` for valid values. | `dump1090` |
+| `ADSB_FEED_DESTINATION_HOSTNAME` | Optional. Allows changing the hostname that ADS-B data is fed to. | `feed.adsbexchange.com` |
+| `ADSB_FEED_DESTINATION_PORT`     | Optional. Allows changing the TCP port that ADS-B data is fed to. | `30005` |
+| `ADSB_FEED_DESTINATION_TYPE`     | Optional. Allows changing the `readsb` output data type. | `beast_reduce_out` |
+| `MLAT_FEED_DESTINATION_HOSTNAME` | Optional. Allows changing the MLAT server hostname. | `feed.adsbexchange.com` |
+| `MLAT_FEED_DESTINATION_PORT`     | Optional. Allows changing the MLAT server TCP port. | `31090` |
 
 ## Ports
 
@@ -131,55 +136,4 @@ I also have a [Discord channel](https://discord.gg/sTf9uYF), feel free to [join]
 
 ## Changelog
 
-### 20200627
-
-* Add `MLAT_INPUT_TYPE` - Expose `mlat-client`'s `--input-type`, for people using alternative ADS-B receivers.
-
-### 20200612
-
-* Set default of `PRIVATE_MLAT` to `false`
-
-### 20200611
-
-* Add `PRIVATE_MLAT` environment variable (thanks to @kyleinprogress!)
-
-### 20200610
-
-* Add docker healthcheck
-* Add architectures `linux/386`
-
-### 20200508
-
-* Change `readsb` over to adsbexchange fork
-* Change `readsb` & `mlat-client` versions to branches specified in <https://github.com/adsbxchange/adsb-exchange/blob/master/setup.sh>
-* Change `readsb` `--write-json` path to `/run/adsbexchange-feed` to work with updated `adsbexchange-stats`
-* Add `REDUCE_INTERVAL` environment variable to change frequency of data submitted to adsbexchange
-* Make `UUID` required
-* Add support for `arm32v6` architecture (for Pi Zero users)
-
-### 20200505
-
-* Configure `mlat-client` to listen on TCP port `30105` for use with tools such as [`graphs1090`](https://github.com/mikenye/docker-graphs1090)
-* Bump `readsb` version to `v3.8.3`
-
-### 20200320
-
-* Linting and tidy up (thanks ShoGinn)
-* Thanks to [ShoGinn](https://github.com/ShoGinn) for many contributions to the 20200320 release and tidy up of code & readme.
-
-### 20200227
-
-* Revert from `master` to `0.6.0` branch for `rtl-sdr` due to compilation problems
-* Implement single `Dockerfile` for multi-architecture
-* Change s6-overlay deployment method
-* Implement buildx
-
-### 20200212
-
-* Change data submission method from `socat` to `readsb` (requested in [Issue #1](https://github.com/mikenye/docker-adsbexchange/issues/1#issue-563773894))
-* Add [adsbxchange/adsbexchange-stats](https://github.com/adsbxchange/adsbexchange-stats) (suggested in [Issue #1](https://github.com/mikenye/docker-adsbexchange/issues/1#issuecomment-585067817))
-* Add ability to pass a static site UUID via environment variable
-
-### 20200204
-
-* Original image
+See the [commit history](https://github.com/mikenye/docker-adsbexchange/commits/master) on GitHub.
