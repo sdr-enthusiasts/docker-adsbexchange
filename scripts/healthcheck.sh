@@ -35,19 +35,19 @@ else
 
 fi
 
-# make sure we're feeding beast/beastreduce data to adsbexchange
-if netstat -an | grep ESTABLISHED | grep 30005 | grep "$(dig +short feed.adsbexchange.com)" > /dev/null; then
-    echo "established beast connection to feed.adsbexchange.com:30005. HEALTHY"
+# make sure we're feeding beast/beastreduce data to adsbexchange 
+if netstat -an | grep ESTABLISHED | grep "${ADSB_FEED_DESTINATION_PORT}" | grep "$(dig +short "${ADSB_FEED_DESTINATION_HOSTNAME}")" > /dev/null; then
+    echo "established beast connection to ${ADSB_FEED_DESTINATION_HOSTNAME}:${ADSB_FEED_DESTINATION_PORT}. HEALTHY"
 else
-    echo "no established beast connection to feed.adsbexchange.com:30005. UNHEALTHY"
+    echo "no established beast connection to ${ADSB_FEED_DESTINATION_HOSTNAME}:${ADSB_FEED_DESTINATION_PORT}. UNHEALTHY"
     EXITCODE=1
 fi
 
 # make sure we're feeding MLAT data to adsbexchange
-if netstat -an | grep ESTABLISHED | grep 31090 | grep "$(dig +short feed.adsbexchange.com)" > /dev/null; then
-    echo "established mlat connection to feed.adsbexchange.com:31090. HEALTHY"
+if netstat -an | grep ESTABLISHED | grep "${MLAT_FEED_DESTINATION_PORT}" | grep "$(dig +short "${MLAT_FEED_DESTINATION_HOSTNAME}")" > /dev/null; then
+    echo "established mlat connection to ${MLAT_FEED_DESTINATION_HOSTNAME}:${MLAT_FEED_DESTINATION_PORT}. HEALTHY"
 else
-    echo "no established mlat connection to feed.adsbexchange.com:31090. UNHEALTHY"
+    echo "no established mlat connection to ${MLAT_FEED_DESTINATION_HOSTNAME}:${MLAT_FEED_DESTINATION_PORT}. UNHEALTHY"
     EXITCODE=1
 fi
 

@@ -7,7 +7,14 @@ ENV ADSBX_JSON_PATH="/run/adsbexchange-feed" \
     S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
     UUID_FILE="/boot/adsbx-uuid" \
     PRIVATE_MLAT="false" \
-    MLAT_INPUT_TYPE="dump1090"
+    MLAT_INPUT_TYPE="dump1090" \
+    ADSB_FEED_DESTINATION_HOSTNAME="feed.adsbexchange.com" \
+    ADSB_FEED_DESTINATION_PORT="30005" \
+    ADSB_FEED_DESTINATION_TYPE="beast_reduce_out" \
+    MLAT_FEED_DESTINATION_HOSTNAME="feed.adsbexchange.com" \
+    MLAT_FEED_DESTINATION_PORT="31090"
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 

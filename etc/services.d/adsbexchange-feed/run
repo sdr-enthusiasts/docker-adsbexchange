@@ -9,7 +9,7 @@ exec \
   --net-heartbeat 60 \
   --net-ro-size 1280 \
   --net-beast-reduce-interval "${REDUCE_INTERVAL}" \
-  --net-connector feed.adsbexchange.com,30005,beast_reduce_out \
+  --net-connector "${ADSB_FEED_DESTINATION_HOSTNAME},${ADSB_FEED_DESTINATION_PORT},${ADSB_FEED_DESTINATION_TYPE}" \
   --net-connector "${BEASTHOST}","${BEASTPORT}",beast_in \
   --net-ro-interval 0.2 \
   --net-ri-port 0 \
