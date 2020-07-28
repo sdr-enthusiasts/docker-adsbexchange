@@ -16,6 +16,8 @@ ENV ADSBX_JSON_PATH="/run/adsbexchange-feed" \
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 RUN set -x && \
     apt-get update -y && \
     apt-get install -y --no-install-recommends \
