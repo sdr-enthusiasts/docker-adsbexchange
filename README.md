@@ -59,9 +59,8 @@ docker run \
  -d \
  --rm \
  --name adsbx \
- -e TZ="YOUR_TIMEZONE" \
+ -e TZ=YOUR_TIMEZONE \
  -e BEASTHOST=beasthost \
- -e TZ=Australia/Perth \
  -e LAT=-33.33333 \
  -e LONG=111.11111 \
  -e ALT=50m \
