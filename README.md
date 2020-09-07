@@ -4,7 +4,7 @@ Docker container to feed ADSB data into adsbexchange. Designed to work in tandem
 
 The container pulls ADS-B information from the [mikenye/readsb](https://hub.docker.com/repository/docker/mikenye/readsb) container (or another host providing data in BEAST format) and sends data to adsbexchange.
 
-For more information on adsbexchange, see here: [ADSBExchange How-To-Feed](https://adsbexchange.com/how-to-feed/). This container uses a modified version of the "script method" outlines on that page.
+For more information on adsbexchange, see here: [ADSBExchange How-To-Feed](https://adsbexchange.com/how-to-feed/). This container uses a modified version of the "script method" outlined on that page.
 
 ## Supported tags and respective Dockerfiles
 
@@ -24,7 +24,7 @@ Currently, this image should pull and run on the following architectures:
 * ```arm32v7```, ```armv7l```: ARMv7 32-bit (Odroid HC1/HC2/XU4, RPi 2/3/4)
 * ```arm64v8```, ```aarch64```: ARMv8 64-bit (RPi 4)
 
-## Configuring `mikenye/readsb` Container
+## Configuring `mikenye/adsbexchange` Container
 
 If you're using this container with the `mikenye/readsb` container to provide ModeS/BEAST data, you'll need to ensure you've opened port 30005 into the `mikenye/readsb` container, so this container can connect to it.
 
