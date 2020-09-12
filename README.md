@@ -12,7 +12,7 @@ For more information on adsbexchange, see here: [ADSBExchange How-To-Feed](https
   * Versions of `mlat-client` and `readsb` specified in [adsbxchange/adsb-exchange/setup.sh](https://github.com/adsbxchange/adsb-exchange/blob/master/setup.sh)
   * Latest version of `adsbexchange-stats`
   * Latest released version of `rtl-sdr`
-* `development` ([`dev` branch](https://github.com/mikenye/docker-adsbexchange/tree/master), [`Dockerfile`](https://github.com/mikenye/docker-adsbexchange/blob/master/Dockerfile), `amd64` architecture only, built on commit, not recommended for production)
+* `latest_nohealthcheck` is the same as the `latest` version above. However, this version has the docker healthcheck removed. This is done for people running platforms (such as [Nomad](https://www.nomadproject.io)) that don't support manually disabling healthchecks, where healthchecks are not wanted.
 * Specific version and architecture tags are available if required, however these are not regularly updated. It is generally recommended to run `latest`.
 
 ## Multi Architecture Support

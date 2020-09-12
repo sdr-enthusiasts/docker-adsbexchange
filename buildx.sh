@@ -41,3 +41,22 @@ docker buildx build -t "${REPO}/${IMAGE}:latest" --compress --push --platform "$
 
 # Clean up
 rm "/tmp/${REPO}_${IMAGE}.current" "/tmp/${REPO}_${IMAGE}.latest"
+
+# BUILD NOHEALTHCHECK VERSION
+# Modify dockerfile to remove healthcheck
+sed '/^HEALTHCHECK /d' < Dockerfile > Dockerfile.nohealthcheck
+
+# Build & push latest
+docker buildx build -f Dockerfile.nohealthcheck -t ${REPO}/${IMAGE}:latest_nohealthcheck --compress --push --platform "${PLATFORMS}" .
+
+# If there are version differences, build & push with a tag matching the build date
+if [ "$DIFFEXITCODE" -ne "0" ]; then
+    docker buildx build -f Dockerfile.nohealthcheck -t "${REPO}/${IMAGE}:${VERSION}_nohealthcheck" --compress --push --platform "${PLATFORMS}" .
+else
+  if [ -z "$FORCEPUSH" ]; then
+    echo "No version changes, not building/pushing."
+    echo "To override, set FORCEPUSH=1."
+    echo ""
+  fi
+fi
+
