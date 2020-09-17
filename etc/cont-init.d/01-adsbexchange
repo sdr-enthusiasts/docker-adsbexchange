@@ -61,6 +61,3 @@ SITENAME="$(echo -e "${SITENAME}" | tr -dc '[a-zA-Z0-9]_\-')"
 # Write UUID file
 echo "$UUID" > "$UUID_FILE"
 echo -e "${CYAN}Statistics available at: https://www.adsbexchange.com/api/feeders/?feed=${UUID}${NOCOLOR}"
-
-# Ensure $ADSBX_JSON_PATH exists
-mkdir -p "${ADSBX_JSON_PATH}"

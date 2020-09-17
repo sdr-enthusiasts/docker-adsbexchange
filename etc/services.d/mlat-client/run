@@ -17,4 +17,4 @@ if [[ ${PRIVATE_MLAT} == true ]]; then
 fi
 
 set -eo pipefail
-exec "${MLAT_CMD}" "${MLAT_PARAM[@]}" 2>&1 | awk -W interactive '{print "[mlat-client] " $0}'
+s6-setuidgid adsbx "${MLAT_CMD}" "${MLAT_PARAM[@]}" 2>&1 | awk -W interactive '{print "[mlat-client] " $0}'

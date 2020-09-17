@@ -1,6 +1,7 @@
 FROM debian:stable-slim
 
 ENV ADSBX_JSON_PATH="/run/adsbexchange-feed" \
+    ADSBX_STATS_PATH="/run/adsbexchange-stats" \
     BEASTPORT=30005 \
     LOG_INTERVAL=900 \
     REDUCE_INTERVAL="0.5" \
@@ -123,8 +124,14 @@ RUN set -x && \
     apt-get purge -y && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/* /src && \
+    echo "========== Create users/paths  ==========" && \
+    useradd --no-create-home --system adsbx && \
+    mkdir -p "$ADSBX_JSON_PATH" && \
+    chown -R adsbx "$ADSBX_JSON_PATH" && \
+    mkdir -p "$ADSBX_STATS_PATH" && \
+    chown -R adsbx "$ADSBX_STATS_PATH" && \
     echo "========== Done! ==========" && \
-    echo "========== Versions of all items built ==========" && \
+    echo "========== Versions of all items built: ==========" && \
     cat /VERSIONS
 
 COPY etc/ /etc/
