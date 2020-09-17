@@ -124,12 +124,15 @@ RUN set -x && \
     apt-get purge -y && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/* /src && \
-    echo "========== Create users/paths  ==========" && \
-    useradd --no-create-home --system adsbx && \
+    echo "========== Create users/groups/paths  ==========" && \
+    groupadd --gid 1000 adsbx --system && \
+    useradd --uid 1000 --no-create-home --no-user-group --gid 1000 --system adsbx && \
     mkdir -p "$ADSBX_JSON_PATH" && \
-    chown -R adsbx "$ADSBX_JSON_PATH" && \
+    chown -R adsbx:adsbx "$ADSBX_JSON_PATH" && \
     mkdir -p "$ADSBX_STATS_PATH" && \
-    chown -R adsbx "$ADSBX_STATS_PATH" && \
+    chown -R adsbx:adsbx "$ADSBX_STATS_PATH" && \
+    touch /boot/adsbx-uuid && \
+    chown adsbx:adsbx /boot/adsbx-uuid && \
     echo "========== Done! ==========" && \
     echo "========== Versions of all items built: ==========" && \
     cat /VERSIONS
@@ -141,3 +144,6 @@ ENTRYPOINT [ "/init" ]
 
 # Add healthcheck
 HEALTHCHECK --start-period=300s --interval=300s CMD /scripts/healthcheck.sh
+
+# Rootless
+USER 1000:1000
