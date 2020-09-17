@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv bash
 # shellcheck shell=bash
 
-sleep 900
-exec \
+s6-setuidgid adsbx sleep 900
+s6-setuidgid adsbx \
     /scripts/health_from_adsbexchange.py \
     | awk -W interactive '{print "[healthcheck] " $0}'
