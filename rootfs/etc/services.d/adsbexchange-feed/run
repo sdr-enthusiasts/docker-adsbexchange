@@ -16,6 +16,7 @@ exec \
   --net-ro-port 0 \
   --net-sbs-port 0 \
   --net-bi-port 0 \
+  --net-bo-port 30005 \
   --stats-every="${LOG_INTERVAL}" \
   --write-json="${ADSBX_JSON_PATH}" \
   2>&1 | stdbuf -o0 sed --unbuffered '/^$/d' | awk -W interactive '{print "[adsbexchange-feed] " $0}'
