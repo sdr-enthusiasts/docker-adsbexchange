@@ -52,7 +52,7 @@ fi
 if [ -z "${TZ}" ]; then
   echo -e "${YELLOW}WARNING: TZ environment variable not set${NOCOLOR}"
 else
-  ln -snf "/usr/share/zoneinfo/$TZ" /etc/localtime && echo "$TZ" >/etc/timezone
+  ln -snf "/usr/share/zoneinfo/$TZ" /tmp/localtime && echo "$TZ" > /etc/timezone
 fi
 
 # Sanitize site name
