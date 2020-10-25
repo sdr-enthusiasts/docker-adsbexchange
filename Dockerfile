@@ -8,6 +8,10 @@ ENV ADSBX_JSON_PATH="/run/adsbexchange-feed" \
     S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
     # Below env var required to suppress errors on init for rootless operation
     S6_READ_ONLY_ROOT=1 \
+    URL_MLAT_CLIENT_REPO="https://github.com/adsbxchange/mlat-client.git" \
+    URL_READSB_REPO="https://github.com/adsbxchange/readsb.git" \
+    URL_ADSBX_SETUPSCRIPTS_REPO="https://github.com/adsbxchange/adsb-exchange.git" \
+    URL_ADSBX_STATS="https://github.com/adsbxchange/adsbexchange-stats.git" \
     UUID_FILE="/boot/adsbx-uuid" \
     PRIVATE_MLAT="false" \
     MLAT_INPUT_TYPE="dump1090" \
@@ -61,11 +65,11 @@ RUN set -x && \
         && \
     git config --global advice.detachedHead false && \
     # Clone adsb-exchange & get versions of mlat-client & readsb to use
-    git clone https://github.com/adsbxchange/adsb-exchange.git /src/adsb-exchange && \
+    git clone "${URL_ADSBX_SETUPSCRIPTS_REPO}" /src/adsb-exchange && \
     BRANCH_MLATCLIENT=$(grep -e "^MLAT_VERSION=" /src/adsb-exchange/setup.sh | cut -d "=" -f 2 | tr -d '"') && \
     BRANCH_READSB=$(grep -e "^READSB_VERSION=" /src/adsb-exchange/setup.sh | cut -d "=" -f 2 | tr -d '"') && \
     # Deploy mlat-client
-    git clone https://github.com/adsbxchange/mlat-client.git /src/mlat-client && \
+    git clone "${URL_MLAT_CLIENT_REPO}" /src/mlat-client && \
     pushd /src/mlat-client && \
     git checkout "${BRANCH_MLATCLIENT}" && \
     echo "mlat-client ${BRANCH_MLATCLIENT}" >> /VERSIONS && \
@@ -75,16 +79,16 @@ RUN set -x && \
     rm mlat-client_*.deb && \
     popd && popd && \
     # Deploy readsb
-    git clone https://github.com/adsbxchange/readsb.git /src/readsb && \
+    git clone "${URL_READSB_REPO}" /src/readsb && \
     pushd /src/readsb && \
     git checkout "${BRANCH_READSB}" || true && \
     echo "readsb ${BRANCH_READSB}" >> /VERSIONS && \
-    make && \
+    make AIRCRAFT_HASH_BITS=12 && \
     mv viewadsb /usr/local/bin/ && \
     mv readsb /usr/local/bin/ && \
     popd && \
     # Deploy adsbexchange-stats
-    git clone https://github.com/adsbxchange/adsbexchange-stats.git /src/adsbexchange-stats && \
+    git clone "${URL_ADSBX_STATS}" /src/adsbexchange-stats && \
     pushd /src/adsbexchange-stats && \
     echo "adsbexchange-stats $(git log | head -1)" >> /VERSIONS && \
     mv /src/adsbexchange-stats/json-status /usr/local/bin/json-status && \
