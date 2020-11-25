@@ -71,7 +71,7 @@ docker run \
 
 ## Up-and-Running with Docker Compose
 
-```json
+```yaml
 version: '2.0'
 
 services:
