@@ -32,7 +32,7 @@ The IP address or hostname of the docker host running the `mikenye/readsb` conta
 
 The latitude and longitude of your antenna must be passed via the `LAT` and `LONG` environment variables respectively.
 
-The altitude of your antenna must be passed via the `ANT` environment variable respectively. Defaults to metres, but units may specified with a 'ft' or 'm' suffix.
+The altitude of your antenna must be passed via the `ALT` environment variable respectively. Defaults to metres, but units may specified with a 'ft' or 'm' suffix.
 
 A UUID for this feeder must be passed via the `UUID` environment variable (see below).
 
