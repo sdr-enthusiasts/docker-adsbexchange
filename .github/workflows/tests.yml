@@ -57,7 +57,19 @@ jobs:
         id: buildx
         uses: docker/setup-buildx-action@v1
 
+      # Get archictecture suffix
+      -
+        name: Get image architecture suffix
+        run: |
+          echo "ARCH_TAG=$(echo '${{ matrix.docker-platform }}' | cut -d '/' -f2- | tr -s '/' '_')" >> $GITHUB_ENV
+      
+      # Show archictecture suffix
+      -
+        name: Show image architecture suffix
+        run: |
+          echo "Architecture suffix: ${{ env.ARCH_TAG }}"
+
       # Test container build for all supported platforms (defined above)
       - 
         name: Build ${{ matrix.docker-platform }}
-        run: docker buildx build --no-cache --progress plain -t "${{ env.REPO }}/${{ env.IMAGE }}:testing_${{ matrix.docker-platform }}" --platform "${{ matrix.docker-platform }}" .
+        run: docker buildx build --no-cache --progress plain -t "${{ env.REPO }}/${{ env.IMAGE }}:testing_${{ env.ARCH_TAG }}" --platform "${{ matrix.docker-platform }}" .
