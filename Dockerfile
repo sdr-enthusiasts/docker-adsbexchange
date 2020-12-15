@@ -66,8 +66,10 @@ RUN set -x && \
     git config --global advice.detachedHead false && \
     # Clone adsb-exchange & get versions of mlat-client & readsb to use
     git clone "${URL_ADSBX_SETUPSCRIPTS_REPO}" /src/adsb-exchange && \
-    BRANCH_MLATCLIENT=$(grep -e "^MLAT_VERSION=" /src/adsb-exchange/setup.sh | cut -d "=" -f 2 | tr -d '"') && \
-    BRANCH_READSB=$(grep -e "^READSB_VERSION=" /src/adsb-exchange/setup.sh | cut -d "=" -f 2 | tr -d '"') && \
+    # BRANCH_MLATCLIENT=$(grep -e "^MLAT_VERSION=" /src/adsb-exchange/setup.sh | cut -d "=" -f 2 | tr -d '"') && \
+    BRANCH_MLATCLIENT=$(git ls-remote "${URL_MLAT_CLIENT_REPO}" | grep HEAD | cut -f1) && \
+    # BRANCH_READSB=$(grep -e "^READSB_VERSION=" /src/adsb-exchange/setup.sh | cut -d "=" -f 2 | tr -d '"') && \
+    BRANCH_READSB=$(git ls-remote "${URL_READSB_REPO}" | grep HEAD | cut -f1) && \
     # Deploy mlat-client
     git clone "${URL_MLAT_CLIENT_REPO}" /src/mlat-client && \
     pushd /src/mlat-client && \
