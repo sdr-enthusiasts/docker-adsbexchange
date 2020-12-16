@@ -10,7 +10,6 @@ MLAT_PARAM+=(--user "${SITENAME}")
 MLAT_PARAM+=(--lat "${LAT}")
 MLAT_PARAM+=(--lon "${LONG}")
 MLAT_PARAM+=(--alt "${ALT}")
-MLAT_PARAM+=(--results "beast,connect,${BEASTHOST}:${BEASTPORT}")
 MLAT_PARAM+=(--results "beast,listen,30105")
 if [[ ${PRIVATE_MLAT} == true ]]; then
     MLAT_PARAM+=(--privacy)
