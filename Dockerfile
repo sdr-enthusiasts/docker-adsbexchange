@@ -93,7 +93,7 @@ RUN set -x && \
     mv readsb /usr/local/bin/ && \
     popd && \
     # Deploy adsbexchange-stats
-    python3 -m pip install vcgencmd && \
+    python3 -m pip install --no-cache-dir vcgencmd && \
     git clone "${URL_ADSBX_STATS}" /src/adsbexchange-stats && \
     pushd /src/adsbexchange-stats && \
     echo "adsbexchange-stats $(git log | head -1)" >> /VERSIONS && \
