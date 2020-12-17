@@ -56,6 +56,9 @@ RUN set -x && \
     TEMP_PACKAGES+=(debhelper) && \
     TEMP_PACKAGES+=(python3-dev) && \
     KEPT_PACKAGES+=(python3) && \
+    TEMP_PACKAGES+=(python3-pip) && \
+    TEMP_PACKAGES+=(python3-wheel) && \
+    TEMP_PACKAGES+=(python3-setuptools) && \
     TEMP_PACKAGES+=(python-distutils-extra) && \
     # Install packages
     apt-get update && \
@@ -90,6 +93,7 @@ RUN set -x && \
     mv readsb /usr/local/bin/ && \
     popd && \
     # Deploy adsbexchange-stats
+    python3 -m pip install --no-cache-dir vcgencmd && \
     git clone "${URL_ADSBX_STATS}" /src/adsbexchange-stats && \
     pushd /src/adsbexchange-stats && \
     echo "adsbexchange-stats $(git log | head -1)" >> /VERSIONS && \
