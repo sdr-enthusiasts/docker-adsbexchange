@@ -1,10 +1,15 @@
 # mikenye/adsbexchange
 
-Docker container to feed ADSB data into adsbexchange. Designed to work in tandem with mikenye/piaware or another BEAST provider. Builds and runs on x86_64, arm32v6, arm32v7 & arm64v8 (see below).
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mikenye/docker-adsbexchange/Deploy%20to%20Docker%20Hub)](https://github.com/mikenye/docker-adsbexchange/actions?query=workflow%3A%22Deploy+to+Docker+Hub%22)
+[![Docker Pulls](https://img.shields.io/docker/pulls/mikenye/adsbexchange.svg)](https://hub.docker.com/r/mikenye/adsbexchange)
+[![Docker Image Size (tag)](https://img.shields.io/docker/image-size/mikenye/adsbexchange/latest)](https://hub.docker.com/r/mikenye/adsbexchange)
+[![Discord](https://img.shields.io/discord/734090820684349521)](https://discord.gg/sTf9uYF)
 
-The container pulls ADS-B information from the [mikenye/readsb](https://hub.docker.com/repository/docker/mikenye/readsb) container (or another host providing data in BEAST format) and sends data to adsbexchange.
+Docker container to feed ADS-B data into [adsbexchange](https://www.adsbexchange.com). Designed to work in tandem with [mikenye/readsb-protobuf](https://hub.docker.com/r/mikenye/readsb-protobuf) or another BEAST provider. Builds and runs on x86, x86_64, arm32v6, arm32v7 & arm64v8.
 
-For more information on adsbexchange, see here: [ADSBExchange How-To-Feed](https://adsbexchange.com/how-to-feed/). This container uses a modified version of the "script method" outlined on that page.
+The container pulls ADS-B information from a BEAST provider and sends data to [adsbexchange](https://www.adsbexchange.com).
+
+For more information on [adsbexchange](https://www.adsbexchange.com), see here: [ADSBExchange How-To-Feed](https://adsbexchange.com/how-to-feed/). This container uses a modified version of the "script method" outlined on that page.
 
 ## Supported tags and respective Dockerfiles
 
@@ -14,15 +19,6 @@ For more information on adsbexchange, see here: [ADSBExchange How-To-Feed](https
   * Latest released version of `rtl-sdr`
 * `latest_nohealthcheck` is the same as the `latest` version above. However, this version has the docker healthcheck removed. This is done for people running platforms (such as [Nomad](https://www.nomadproject.io)) that don't support manually disabling healthchecks, where healthchecks are not wanted.
 * Specific version and architecture tags are available if required, however these are not regularly updated. It is generally recommended to run `latest`.
-
-## Multi Architecture Support
-
-Currently, this image should pull and run on the following architectures:
-
-* ```amd64```: Linux x86-64
-* ```arm32v6```: ARMv6 32-bit (Pi Zero)
-* ```arm32v7```, ```armv7l```: ARMv7 32-bit (Odroid HC1/HC2/XU4, RPi 2/3/4)
-* ```arm64v8```, ```aarch64```: ARMv8 64-bit (RPi 4)
 
 ## Configuring `mikenye/adsbexchange` Container
 
