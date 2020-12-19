@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2181
 
 # Fix for issue #41 (https://github.com/mikenye/docker-adsbexchange/issues/41)
 

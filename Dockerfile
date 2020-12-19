@@ -94,7 +94,7 @@ RUN set -x && \
     pushd /src/raspberrypi/userland && \
     # Remove sudo - this script runs as root
     sed -i 's/sudo//g' ./buildme && \
-    ./buildme --$(uname -m) && \
+    ./buildme "--$(uname -m)" && \
     echo '/opt/vc/lib' > /etc/ld.so.conf.d/rpi_userland.conf && \
     ldconfig && \
     popd && \
