@@ -92,6 +92,15 @@ RUN set -x && \
     mv viewadsb /usr/local/bin/ && \
     mv readsb /usr/local/bin/ && \
     popd && \
+    # Deploy rpi userland binaries (vcgencmd + others)
+    git clone --depth 1 https://github.com/raspberrypi/userland.git /src/raspberrypi/userland && \
+    pushd /src/raspberrypi/userland && \
+    # Remove sudo - this script runs as root
+    sed -i 's/sudo//g' ./buildme && \
+    ./buildme "--$(uname -m)" && \
+    echo '/opt/vc/lib' > /etc/ld.so.conf.d/rpi_userland.conf && \
+    ldconfig && \
+    popd && \
     # Deploy adsbexchange-stats
     python3 -m pip install --no-cache-dir vcgencmd && \
     git clone "${URL_ADSBX_STATS}" /src/adsbexchange-stats && \
@@ -100,6 +109,8 @@ RUN set -x && \
     mv /src/adsbexchange-stats/json-status /usr/local/bin/json-status && \
     mkdir -p /run/adsbexchange-stats && \
     popd && \
+    # Fix for issue #41 (https://github.com/mikenye/docker-adsbexchange/issues/41)
+    sed -i 's/vcgencmd get_throttled/\/scripts\/vcgencmd_get_throttled_wrapper.sh/g' /usr/local/bin/json-status && \
     # Deploy s6-overlay
     curl -s https://raw.githubusercontent.com/mikenye/deploy-s6-overlay/master/deploy-s6-overlay.sh | sh && \
     # Clean-up
