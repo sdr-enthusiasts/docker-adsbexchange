@@ -8,6 +8,7 @@ ENV ADSBX_JSON_PATH="/run/adsbexchange-feed" \
     S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
     # Below env var required to suppress errors on init for rootless operation
     S6_READ_ONLY_ROOT=1 \
+    URL_HEALTHCHECKS_FRAMEWORK_REPO="https://github.com/mikenye/docker-healthchecks-framework.git" \
     URL_MLAT_CLIENT_REPO="https://github.com/adsbxchange/mlat-client.git" \
     URL_READSB_REPO="https://github.com/adsbxchange/readsb.git" \
     URL_ADSBX_SETUPSCRIPTS_REPO="https://github.com/adsbxchange/adsb-exchange.git" \
@@ -113,6 +114,17 @@ RUN set -x && \
     sed -i 's/vcgencmd get_throttled/\/scripts\/vcgencmd_get_throttled_wrapper.sh/g' /usr/local/bin/json-status && \
     # Deploy s6-overlay
     curl -s https://raw.githubusercontent.com/mikenye/deploy-s6-overlay/master/deploy-s6-overlay.sh | sh && \
+    # Deploy healthchecks framework
+    git clone \
+      --depth=1 \
+      "$URL_HEALTHCHECKS_FRAMEWORK_REPO" \
+      /opt/healthchecks-framework \
+      && \
+    rm -rf \
+      /opt/healthchecks-framework/.git* \
+      /opt/healthchecks-framework/*.md \
+      /opt/healthchecks-framework/tests \
+      && \
     # Clean-up
     apt-get remove -y ${TEMP_PACKAGES[@]} && \
     apt-get autoremove -y && \
