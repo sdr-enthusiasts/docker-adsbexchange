@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC1091
 set -e
+
+# source healthcheck functions
+source /opt/healthchecks-framework/healthchecks.sh
 
 EXITCODE=0
 
@@ -35,8 +39,9 @@ else
 
 fi
 
-# make sure we're feeding beast/beastreduce data to adsbexchange 
-if netstat -an | grep ESTABLISHED | grep "${ADSB_FEED_DESTINATION_PORT}" | grep "$(dig +short "${ADSB_FEED_DESTINATION_HOSTNAME}")" > /dev/null; then
+# make sure we're feeding beast/beastreduce data to adsbexchange
+
+if check_tcp4_connection_established ANY ANY "$(dig +short "${ADSB_FEED_DESTINATION_HOSTNAME}")" "${ADSB_FEED_DESTINATION_PORT}"; then
     echo "established beast connection to ${ADSB_FEED_DESTINATION_HOSTNAME}:${ADSB_FEED_DESTINATION_PORT}. HEALTHY"
 else
     echo "no established beast connection to ${ADSB_FEED_DESTINATION_HOSTNAME}:${ADSB_FEED_DESTINATION_PORT}. UNHEALTHY"
@@ -44,7 +49,7 @@ else
 fi
 
 # make sure we're feeding MLAT data to adsbexchange
-if netstat -an | grep ESTABLISHED | grep "${MLAT_FEED_DESTINATION_PORT}" | grep "$(dig +short "${MLAT_FEED_DESTINATION_HOSTNAME}")" > /dev/null; then
+if check_tcp4_connection_established ANY ANY "$(dig +short "${MLAT_FEED_DESTINATION_HOSTNAME}")" "${MLAT_FEED_DESTINATION_PORT}"; then
     echo "established mlat connection to ${MLAT_FEED_DESTINATION_HOSTNAME}:${MLAT_FEED_DESTINATION_PORT}. HEALTHY"
 else
     echo "no established mlat connection to ${MLAT_FEED_DESTINATION_HOSTNAME}:${MLAT_FEED_DESTINATION_PORT}. UNHEALTHY"
@@ -52,7 +57,7 @@ else
 fi
 
 # make sure we're listening for beast 
-if netstat -an | grep LISTEN | grep 30005 > /dev/null; then
+if check_tcp4_socket_listening ANY 30005; then
     echo "listening for beast connections on port 30005. HEALTHY"
 else
     echo "not listening for beast connections on port 30005. UNHEALTHY"
@@ -60,7 +65,7 @@ else
 fi
 
 # make sure we're listening for mlat 
-if netstat -an | grep LISTEN | grep 30105 > /dev/null; then
+if check_tcp4_socket_listening ANY 30105; then
     echo "listening for mlat connections on port 30105. HEALTHY"
 else
     echo "not listening for mlat connections on port 30105. UNHEALTHY"
