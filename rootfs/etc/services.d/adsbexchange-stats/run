@@ -1,6 +1,10 @@
 #!/usr/bin/with-contenv bash
 # shellcheck shell=bash
 
+# greps suppress jq errors that happen on container startup or for new users
+
 exec \
     /usr/local/bin/json-status 2>&1 \
+    | grep -vE 'jq: error .* \(null\) number required' \
+    | grep -vE 'jq: error .* \(null\) and number \(0\) cannot be divided' \
     | awk -W interactive '{print "[adsbexchange-stats] " $0}'
