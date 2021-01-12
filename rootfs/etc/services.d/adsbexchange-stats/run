@@ -3,6 +3,7 @@
 
 # greps suppress jq errors that happen on container startup or for new users
 
+# shellcheck disable=SC2016
 exec \
     /usr/local/bin/json-status 2>&1 \
     | stdbuf -o0 grep -vE 'jq: error .* \(null\) number required' \
