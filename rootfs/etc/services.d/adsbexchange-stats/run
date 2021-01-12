@@ -5,6 +5,6 @@
 
 exec \
     /usr/local/bin/json-status 2>&1 \
-    | grep -vE 'jq: error .* \(null\) number required' \
-    | grep -vE 'jq: error .* \(null\) and number \(0\) cannot be divided' \
-    | awk -W interactive '{print "[adsbexchange-stats] " $0}'
+    | stdbuf -o0 grep -vE 'jq: error .* \(null\) number required' \
+    | stdbuf -o0 grep -vE 'jq: error .* \(null\) and number \(0\) cannot be divided' \
+    | stdbuf -o0 awk -W interactive '{print "[adsbexchange-stats] " $0}'
