@@ -69,13 +69,13 @@ RUN set -x && \
         && \
     git config --global advice.detachedHead false && \
     # Clone adsb-exchange & get versions of mlat-client & readsb to use
-    git clone "${URL_ADSBX_SETUPSCRIPTS_REPO}" /src/adsb-exchange && \
+    git clone --depth 1 "${URL_ADSBX_SETUPSCRIPTS_REPO}" /src/adsb-exchange && \
     # BRANCH_MLATCLIENT=$(grep -e "^MLAT_VERSION=" /src/adsb-exchange/setup.sh | cut -d "=" -f 2 | tr -d '"') && \
     BRANCH_MLATCLIENT=$(git ls-remote "${URL_MLAT_CLIENT_REPO}" | grep HEAD | cut -f1) && \
     # BRANCH_READSB=$(grep -e "^READSB_VERSION=" /src/adsb-exchange/setup.sh | cut -d "=" -f 2 | tr -d '"') && \
     BRANCH_READSB=$(git ls-remote "${URL_READSB_REPO}" | grep HEAD | cut -f1) && \
     # Deploy mlat-client
-    git clone "${URL_MLAT_CLIENT_REPO}" /src/mlat-client && \
+    git clone --depth 1 "${URL_MLAT_CLIENT_REPO}" /src/mlat-client && \
     pushd /src/mlat-client && \
     git checkout "${BRANCH_MLATCLIENT}" && \
     echo "mlat-client ${BRANCH_MLATCLIENT}" >> /VERSIONS && \
@@ -85,7 +85,7 @@ RUN set -x && \
     rm mlat-client_*.deb && \
     popd && popd && \
     # Deploy readsb
-    git clone "${URL_READSB_REPO}" /src/readsb && \
+    git clone --depth 1 "${URL_READSB_REPO}" /src/readsb && \
     pushd /src/readsb && \
     git checkout "${BRANCH_READSB}" || true && \
     echo "readsb ${BRANCH_READSB}" >> /VERSIONS && \
@@ -104,11 +104,10 @@ RUN set -x && \
     popd && \
     # Deploy adsbexchange-stats
     python3 -m pip install --no-cache-dir vcgencmd && \
-    git clone "${URL_ADSBX_STATS}" /src/adsbexchange-stats && \
+    git clone --depth 1 "${URL_ADSBX_STATS}" /src/adsbexchange-stats && \
     pushd /src/adsbexchange-stats && \
     echo "adsbexchange-stats $(git log | head -1)" >> /VERSIONS && \
     mv /src/adsbexchange-stats/json-status /usr/local/bin/json-status && \
-    mkdir -p /run/adsbexchange-stats && \
     popd && \
     # Fix for issue #41 (https://github.com/mikenye/docker-adsbexchange/issues/41)
     sed -i 's/vcgencmd get_throttled/\/scripts\/vcgencmd_get_throttled_wrapper.sh/g' /usr/local/bin/json-status && \
@@ -132,10 +131,6 @@ RUN set -x && \
     # Create user/group for rootless operation
     groupadd --gid 1000 adsbx --system && \
     useradd --uid 1000 --no-create-home --no-user-group --gid 1000 --system adsbx && \
-    mkdir -p "$ADSBX_JSON_PATH" && \
-    chown -R adsbx:adsbx "$ADSBX_JSON_PATH" && \
-    mkdir -p "$ADSBX_STATS_PATH" && \
-    chown -R adsbx:adsbx "$ADSBX_STATS_PATH" && \
     touch /boot/adsbx-uuid && \
     chown adsbx:adsbx /boot/adsbx-uuid && \
     # Set up symlinks for /etc/localtime & permissions for /etc/timezone for rootless operation
