@@ -62,7 +62,7 @@ docker run \
  -e ALT=50m \
  -e SITENAME=My_Cool_ADSB_Receiver \
  -e UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx \
- -e tmpfs=/run:rw,nosuid,nodev,exec,relatime,size=64M,uid=1000,gid=1000
+ --tmpfs=/run:rw,nosuid,nodev,exec,relatime,size=64M,uid=1000,gid=1000 \
  mikenye/adsbexchange
 ```
 
