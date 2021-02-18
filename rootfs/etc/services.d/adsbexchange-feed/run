@@ -1,6 +1,7 @@
 #!/usr/bin/with-contenv bash
 # shellcheck shell=bash
 
+mkdir -p "${ADSBX_JSON_PATH}"
 exec \
   /usr/local/bin/readsb \
   --net \
