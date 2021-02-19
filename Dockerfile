@@ -135,6 +135,7 @@ RUN set -x && \
     chown adsbx:adsbx /boot/adsbx-uuid && \
     # Set up symlinks for /etc/localtime & permissions for /etc/timezone for rootless operation
     chown adsbx:adsbx /etc/timezone && \
+    chown adsbx:adsbx /run && \
     rm /etc/localtime && \
     ln -s /tmp/localtime /etc/localtime && \
     # Fix /etc/s6/init/init-stage2-fixattrs.txt for rootless operation
