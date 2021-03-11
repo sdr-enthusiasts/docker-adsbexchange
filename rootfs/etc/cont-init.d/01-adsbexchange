@@ -35,11 +35,11 @@ if [ -z "${UUID}" ]; then
 fi
 
 # Check to make sure ALT includes "m" or "ft" suffix if positive
-if ! echo "${ALT}" | grep -P '(^\-{0}\d+(m{0,1}|ft)$|^-\d+$)' > /dev/null 2>&1; then
+if ! echo "${ALT}" | grep -P '(^\-{0}[\d\.]+(m{0,1}|ft)$|^-[\d\.]+$)' > /dev/null 2>&1; then
   echo -e "${LIGHTRED}ERROR: ALT should be either:"
-  echo -e "  * A positive integer ending in 'm' (for metres) or 'ft' (for feet)'; or"
-  echo -e "  * A positive integer with no suffix (for metres)"
-  echo -e "  * A negative integer in metres (no suffix) for below sea level.${NOCOLOR}"
+  echo -e "  * A positive number ending in 'm' (for metres) or 'ft' (for feet)'; or"
+  echo -e "  * A positive number with no suffix (for metres)"
+  echo -e "  * A negative number in metres (no suffix) for below sea level.${NOCOLOR}"
   EXITCODE=1
 fi
 
