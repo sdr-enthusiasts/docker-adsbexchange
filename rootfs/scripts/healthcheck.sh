@@ -39,22 +39,18 @@ else
 
 fi
 
-# make sure we're feeding beast/beastreduce data to adsbexchange
-
-if check_tcp4_connection_established ANY ANY "$(get_ipv4 "${ADSB_FEED_DESTINATION_HOSTNAME}")" "${ADSB_FEED_DESTINATION_PORT}"; then
-    echo "established beast connection to ${ADSB_FEED_DESTINATION_HOSTNAME}:${ADSB_FEED_DESTINATION_PORT}. HEALTHY"
-elif check_tcp4_connection_established ANY ANY "$(get_ipv4 "${ADSB_FEED_SECONDARY_DESTINATION_HOSTNAME}")" "${ADSB_FEED_SECONDARY_DESTINATION_PORT}"; then
-    echo "established beast connection to ${ADSB_FEED_SECONDARY_DESTINATION_HOSTNAME}:${ADSB_FEED_SECONDARY_DESTINATION_PORT}. HEALTHY"
+# make sure we're feeding beast/beastreduce & mlat data to adsbexchange
+MYIP_JSON_OUTPUT=$(curl --silent -o - https://www.adsbexchange.com/myip/)
+if echo "$MYIP_JSON_OUTPUT" | grep -i beast "$TEMPFILE" > /dev/null 2>&1; then
+    echo "ADSBx reports beast connection: HEALTHY"
 else
-    echo "no established beast connection to ADSBExchange. UNHEALTHY"
+    echo "ADSBx reports beast connection: UNHEALTHY"
     EXITCODE=1
 fi
-
-# make sure we're feeding MLAT data to adsbexchange
-if check_tcp4_connection_established ANY ANY "$(get_ipv4 "${MLAT_FEED_DESTINATION_HOSTNAME}")" "${MLAT_FEED_DESTINATION_PORT}"; then
-    echo "established mlat connection to ${MLAT_FEED_DESTINATION_HOSTNAME}:${MLAT_FEED_DESTINATION_PORT}. HEALTHY"
+if echo "$MYIP_JSON_OUTPUT" | grep -i mlat "$TEMPFILE" > /dev/null 2>&1; then
+    echo "ADSBx reports MLAT connection: HEALTHY"
 else
-    echo "no established mlat connection to ADSBExchange. UNHEALTHY"
+    echo "ADSBx reports MLAT connection: UNHEALTHY"
     EXITCODE=1
 fi
 
