@@ -24,14 +24,14 @@ if [ -f "/run/adsbexchange-feed/aircraft.json" ]; then
         echo "adsbexchange-feed last updated: ${TIMESTAMP_LAST_READSB_UPDATE}, now: ${TIMESTAMP_NOW}, delta: ${TIMEDELTA}. HEALTHY"
     fi
 
-    # get number of aircraft
-    NUM_AIRCRAFT=$(jq '.aircraft | length' < /run/adsbexchange-feed/aircraft.json)
-    if [ "$NUM_AIRCRAFT" -lt 1 ]; then
-        echo "total aircraft: $NUM_AIRCRAFT. UNHEALTHY"
-        EXITCODE=1
-    else
-        echo "total aircraft: $NUM_AIRCRAFT. HEALTHY"
-    fi
+    # # get number of aircraft
+    # NUM_AIRCRAFT=$(jq '.aircraft | length' < /run/adsbexchange-feed/aircraft.json)
+    # if [ "$NUM_AIRCRAFT" -lt 1 ]; then
+    #     echo "total aircraft: $NUM_AIRCRAFT. UNHEALTHY"
+    #     EXITCODE=1
+    # else
+    #     echo "total aircraft: $NUM_AIRCRAFT. HEALTHY"
+    # fi
 
 else
 
