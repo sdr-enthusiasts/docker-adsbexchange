@@ -10,7 +10,7 @@ PATH=$PATH:/opt/vc/bin
 if which vcgencmd > /dev/null; then
   # Attempt to call 'vcgencmd get_throttled'.
   VCGENCMD_GET_THROTTLED=$(vcgencmd get_throttled 2>&1)
-  if [[ "$?" -ne 0 ]]; then
+  if [[ "$?" -eq 0 ]]; then
     # If the command works (ie, user is on RPi and has forwarded the /dev/vhci into the container), then use that output.
     echo "$VCGENCMD_GET_THROTTLED"
   else
