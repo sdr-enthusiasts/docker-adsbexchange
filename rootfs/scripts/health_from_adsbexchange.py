@@ -3,6 +3,7 @@
 import subprocess
 import json
 import os
+import sys
 
 stats_raw = subprocess.check_output(['curl','--silent','https://www.adsbexchange.com/myip/'])
 stats_json = json.loads(stats_raw.decode('utf-8'))
@@ -14,7 +15,16 @@ if 'ERR' in stats_json.keys():
     print(stats_json['ERR'])
 else:
     print("")
-    if stats_json['stats-uuid'].lower() == 'not found':
+    
+    if 'stats-uuid' in stats_json.keys():
+        jsonkey = 'stats-uuid'
+    elif 'stats-uuid1' in stats_json.keys():
+        jsonkey = 'stats-uuid1'
+    else:
+        print("Could not determine UUID")
+        sys.exit(1)
+    
+    if stats_json[jsonkey].lower() == 'not found':
         print("Feeder '%s':" % (os.environ['SITENAME']))
     else:
         print("Feeder '%s', UUID '%s':" % (os.environ['SITENAME'], stats_json['stats-uuid']))
