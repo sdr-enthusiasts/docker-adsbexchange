@@ -27,8 +27,8 @@ else:
     if stats_json[jsonkey].lower() == 'not found':
         print("Feeder '%s':" % (os.environ['SITENAME']))
     else:
-        print("Feeder '%s', UUID '%s':" % (os.environ['SITENAME'], stats_json['stats-uuid']))
-        print("Online statistics at: https://www.adsbexchange.com/api/feeders/?feed=%s" % (stats_json['stats-uuid']))
+        print("Feeder '%s', UUID '%s':" % (os.environ['SITENAME'], stats_json[jsonkey]))
+        print("Online statistics at: https://www.adsbexchange.com/api/feeders/?feed=%s" % (stats_json[jsonkey]))
     print("")
     datadict = dict()
     for k in stats_json.keys():
