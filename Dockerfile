@@ -13,7 +13,6 @@ ENV ADSBX_JSON_PATH="/run/adsbexchange-feed" \
     URL_READSB_REPO="https://github.com/adsbxchange/readsb.git" \
     URL_ADSBX_SETUPSCRIPTS_REPO="https://github.com/adsbxchange/adsb-exchange.git" \
     URL_ADSBX_STATS="https://github.com/adsbxchange/adsbexchange-stats.git" \
-    UUID_FILE="/boot/adsbx-uuid" \
     PRIVATE_MLAT="false" \
     MLAT_INPUT_TYPE="dump1090" \
     ADSB_FEED_DESTINATION_HOSTNAME="feed.adsbexchange.com" \
