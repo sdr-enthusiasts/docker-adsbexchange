@@ -1,4 +1,4 @@
-FROM debian:buster-20210816-slim
+FROM debian:buster-20210902-slim
 
 ENV ADSBX_JSON_PATH="/run/adsbexchange-feed" \
     ADSBX_STATS_PATH="/run/adsbexchange-stats" \
