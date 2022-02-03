@@ -4,4 +4,4 @@
 sleep 900
 exec \
     /scripts/health_from_adsbexchange.py \
-    | awk -W interactive '{print "[healthcheck] " $0}'
+    | mawk -W interactive '{print "[healthcheck] " $0}'
