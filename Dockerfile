@@ -55,10 +55,10 @@ RUN set -x && \
         && \
     # Clone adsb-exchange to get repo & branch of mlat-client & readsb
     git clone --depth 1 "https://github.com/adsbxchange/adsb-exchange.git" "/src/adsb-exchange" && \
-    MLAT_REPO=$(grep -h '^MLAT_REPO=.*' /src/adsb-exchange/* 2> /dev/null | head -1 | cut -d "=" -f 2 | tr -d '"') && \
-    MLAT_BRANCH=$(grep -h '^MLAT_BRANCH=.*' /src/adsb-exchange/* 2> /dev/null | head -1 | cut -d "=" -f 2 | tr -d '"') && \
-    READSB_REPO=$(grep -h '^READSB_REPO=.*' /src/adsb-exchange/* 2> /dev/null | head -1 | cut -d "=" -f 2 | tr -d '"') && \
-    READSB_BRANCH=$(grep -h '^READSB_BRANCH=.*' /src/adsb-exchange/* 2> /dev/null | head -1 | cut -d "=" -f 2 | tr -d '"') && \
+    MLAT_REPO=$(grep -h '^MLAT_REPO=.*' /src/adsb-exchange/* 2> /dev/null | head -1 | cut -d "=" -f 2 | tr -d '"' | exit 0) && \
+    MLAT_BRANCH=$(grep -h '^MLAT_BRANCH=.*' /src/adsb-exchange/* 2> /dev/null | head -1 | cut -d "=" -f 2 | tr -d '"' | exit 0) && \
+    READSB_REPO=$(grep -h '^READSB_REPO=.*' /src/adsb-exchange/* 2> /dev/null | head -1 | cut -d "=" -f 2 | tr -d '"' | exit 0) && \
+    READSB_BRANCH=$(grep -h '^READSB_BRANCH=.*' /src/adsb-exchange/* 2> /dev/null | head -1 | cut -d "=" -f 2 | tr -d '"' | exit 0) && \
     # readsb
     git clone --branch "$READSB_BRANCH" --depth 1 "$READSB_REPO" "/src/readsb" && \
     pushd "/src/readsb" && \
