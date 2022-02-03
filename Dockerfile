@@ -47,9 +47,9 @@ RUN set -x && \
     TEMP_PACKAGES+=(gcc-arm-linux-gnueabihf) && \
     TEMP_PACKAGES+=(g++) && \
     TEMP_PACKAGES+=(g++-arm-linux-gnueabihf) && \
-    # Install packages
+    # Install packages (--ignore-missing due to the *-arm-linux-gnueabihf packages)
     apt-get update && \
-    apt-get install -y --no-install-recommends \
+    apt-get install --ignore-missing -y --no-install-recommends \
         ${KEPT_PACKAGES[@]} \
         ${TEMP_PACKAGES[@]} \
         && \
