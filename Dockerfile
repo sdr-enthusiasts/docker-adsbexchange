@@ -23,6 +23,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 COPY rootfs/ /
 
 RUN set -x && \
+    apt-get update && \
     TEMP_PACKAGES=() && \
     KEPT_PACKAGES=() && \
     # Required for healthcheck
@@ -44,11 +45,10 @@ RUN set -x && \
     TEMP_PACKAGES+=(python3-dev) && \
     # raspberrypi/userland dependencies
     TEMP_PACKAGES+=(gcc) && \
-    TEMP_PACKAGES+=(gcc-arm-linux-gnueabihf) && \
+    if apt-cache search gcc-arm-linux-gnueabihf | grep gcc-arm-linux-gnueabihf; then TEMP_PACKAGES+=(gcc-arm-linux-gnueabihf); fi && \
     TEMP_PACKAGES+=(g++) && \
-    TEMP_PACKAGES+=(g++-arm-linux-gnueabihf) && \
+    if apt-cache search g++-arm-linux-gnueabihf | grep g++-arm-linux-gnueabihf; then TEMP_PACKAGES+=(g++-arm-linux-gnueabihf); fi && \
     # Install packages (--ignore-missing due to the *-arm-linux-gnueabihf packages)
-    apt-get update && \
     apt-get install --ignore-missing -y --no-install-recommends \
         ${KEPT_PACKAGES[@]} \
         ${TEMP_PACKAGES[@]} \
