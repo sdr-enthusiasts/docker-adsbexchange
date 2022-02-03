@@ -20,7 +20,7 @@ exec \
   --net-bo-port 30005 \
   --stats-every="${LOG_INTERVAL}" \
   --write-json="${ADSBX_JSON_PATH}" \
-  2>&1 | stdbuf -o0 sed --unbuffered '/^$/d' | awk -W interactive '{print "[adsbexchange-feed] " $0}'
+  2>&1 | stdbuf -o0 sed --unbuffered '/^$/d' | mawk -W interactive '{print "[adsbexchange-feed] " $0}'
 
   # stdbuf -o0 sed --unbuffered '/^$/d'  --  (remove blank lines from output)
   # awk -W interactive '{print "[adsbexchange-feed] " $0}'  --  (prefix log messages with "[adsbexchange-feed]")
