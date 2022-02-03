@@ -100,6 +100,8 @@ RUN set -x && \
     # readsb: simple tests
     readsb --version && \
     viewadsb --version && \
+    # mlat-client: simple test
+    python3 -c 'import mlat.client' && \
     # Create user/group for rootless operation
     groupadd --gid 1000 adsbx --system && \
     useradd --uid 1000 --no-create-home --no-user-group --gid 1000 --system adsbx && \
