@@ -86,7 +86,7 @@ RUN set -x && \
     # vcgencmd
     python3 -m pip install --no-cache-dir vcgencmd && \
     # adsbexchange-stats
-    git clone --depth 1 "${URL_ADSBX_STATS}" /src/adsbexchange-stats && \
+    git clone --depth 1 'https://github.com/adsbxchange/adsbexchange-stats.git' /src/adsbexchange-stats && \
     pushd /src/adsbexchange-stats && \
     echo "adsbexchange-stats $(git log | head -1)" >> /VERSIONS && \
     mv /src/adsbexchange-stats/json-status /usr/local/bin/json-status && \
