@@ -1,4 +1,4 @@
-FROM ghcr.io/fredclausen/docker-baseimage:base
+FROM ghcr.io/sdr-enthusiasts/docker-baseimage:base
 
 ENV ADSBX_JSON_PATH="/run/adsbexchange-feed" \
     ADSBX_STATS_PATH="/run/adsbexchange-stats" \
