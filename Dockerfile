@@ -62,6 +62,7 @@ RUN set -x && \
     # readsb
     git clone --branch "$READSB_BRANCH" --depth 1 "$READSB_REPO" "/src/readsb" && \
     pushd "/src/readsb" && \
+    echo "readsb $(git log | head -1)" >> /VERSIONS && \
     make -j "$(nproc)" && \
     find "/src/readsb" -maxdepth 1 -executable -type f -exec cp -v {} /usr/local/bin/ \; && \
     popd && \
@@ -69,6 +70,7 @@ RUN set -x && \
     # mlat-client
     git clone --branch "$MLAT_BRANCH" --depth 1 "$MLAT_REPO" "/src/mlat-client" && \
     pushd /src/mlat-client && \
+    echo "mlat-client $(git log | head -1)" >> /VERSIONS && \
     ./setup.py build && \
     ./setup.py install && \
     popd && \
@@ -114,7 +116,9 @@ RUN set -x && \
     ln -s /tmp/localtime /etc/localtime && \
     # Fix /etc/s6/init/init-stage2-fixattrs.txt for rootless operation
     sed -i 's/ root / adsbx /g' /etc/s6/init/init-stage2-fixattrs.txt && \
-    redirfd -r 0 /etc/s6/init/init-stage2-fixattrs.txt fix-attrs
+    redirfd -r 0 /etc/s6/init/init-stage2-fixattrs.txt fix-attrs && \
+    # Simple date/time versioning
+    date +%Y%m%d.%H%M > /CONTAINER_VERSION
 
 # Add healthcheck
 HEALTHCHECK --start-period=300s --interval=300s CMD /scripts/healthcheck.sh
