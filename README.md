@@ -11,7 +11,7 @@ For more information on [adsbexchange](https://www.adsbexchange.com), see here: 
 
 ## Supported tags and respective Dockerfiles
 
-* `latest` is built from the [`main` branch](https://github.com/sdr-enthusiasts/docker-adsbexchange/tree/main) for all supported architectures. It contains:
+* `latest` is built from the [`main` branch](https://github.com/sdr-enthusiasts/docker-adsbexchange/tree/main) within 24 hours of a commit to the base image and/or any adsbexchange software included in the image. It contains:
   * Versions of `mlat-client` and `readsb` specified in [adsbxchange/adsb-exchange/setup.sh](https://github.com/adsbxchange/adsb-exchange/blob/master/setup.sh)
   * Latest version of `adsbexchange-stats`
   * Latest released version of `rtl-sdr`
