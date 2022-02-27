@@ -5,7 +5,7 @@
 [![Docker Image Size (tag)](https://img.shields.io/docker/image-size/mikenye/adsbexchange/latest)](https://hub.docker.com/r/mikenye/adsbexchange)
 [![Discord](https://img.shields.io/discord/734090820684349521)](https://discord.gg/sTf9uYF)
 
-Docker container to feed ADS-B data into [adsbexchange](https://www.adsbexchange.com). Designed to work in tandem with [mikenye/readsb-protobuf](https://hub.docker.com/r/mikenye/readsb-protobuf) or another BEAST provider. Builds and runs on x86, x86_64, arm32v6, arm32v7 & arm64v8.
+Docker container to feed ADS-B data into [adsbexchange](https://www.adsbexchange.com). Designed to work in tandem with [sdr-enthusiasts/readsb-protobuf](https://github.com/sdr-enthusiasts/docker-readsb-protobuf) or another BEAST provider. Builds and runs on x86, x86_64, arm32v6, arm32v7 & arm64v8.
 
 The container pulls ADS-B information from a BEAST provider and sends data to [adsbexchange](https://www.adsbexchange.com).
 
@@ -13,14 +13,14 @@ For more information on [adsbexchange](https://www.adsbexchange.com), see here: 
 
 ## Supported tags and respective Dockerfiles
 
-* `latest` is built nightly from the [`master` branch](https://github.com/mikenye/docker-adsbexchange/tree/master) [`Dockerfile`](https://github.com/mikenye/docker-adsbexchange/blob/master/Dockerfile) for all supported architectures. It contains:
+* `latest` is built from the [`master` branch](https://github.com/sdr-enthusiasts/docker-adsbexchange/tree/master) [`Dockerfile`](https://github.com/sdr-enthusiasts/docker-adsbexchange/blob/master/Dockerfile) for all supported architectures. It contains:
   * Versions of `mlat-client` and `readsb` specified in [adsbxchange/adsb-exchange/setup.sh](https://github.com/adsbxchange/adsb-exchange/blob/master/setup.sh)
   * Latest version of `adsbexchange-stats`
   * Latest released version of `rtl-sdr`
 * `latest_nohealthcheck` is the same as the `latest` version above. However, this version has the docker healthcheck removed. This is done for people running platforms (such as [Nomad](https://www.nomadproject.io)) that don't support manually disabling healthchecks, where healthchecks are not wanted.
 * Specific version and architecture tags are available if required, however these are not regularly updated. It is generally recommended to run `latest`.
 
-## Configuring `mikenye/adsbexchange` Container
+## Configuring `sdr-enthusiasts/adsbexchange` Container
 
 If you're using this container with the `mikenye/readsb` container to provide ModeS/BEAST data, you'll need to ensure you've opened port 30005 into the `mikenye/readsb` container, so this container can connect to it.
 
@@ -63,7 +63,7 @@ docker run \
  -e SITENAME=My_Cool_ADSB_Receiver \
  -e UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx \
  --tmpfs=/run:rw,nosuid,nodev,exec,relatime,size=64M,uid=1000,gid=1000 \
- mikenye/adsbexchange
+ sdr-enthusiasts/docker-adsbexchange
 ```
 
 ## Up-and-Running with Docker Compose
@@ -73,7 +73,7 @@ version: '2.0'
 
 services:
   adsbexchange:
-    image: mikenye/adsbexchange
+    image: sdr-enthusiasts/docker-adsbexchange
     tty: true
     container_name: adsbx
     restart: always
@@ -89,7 +89,7 @@ services:
       - /run:rw,nosuid,nodev,exec,relatime,size=64M,uid=1000,gid=1000
 ```
 
-## Up-and-Running with Docker Compose, including `mikenye/readsb`
+## Up-and-Running with Docker Compose, including `sdr-enthusiasts/docker-readsb-protobuf`
 
 See [Guide to ADS-B Data Reception, Decoding & Sharing with RTLSDR & Docker](https://github.com/mikenye/docker-readsb/wiki/Guide-to-ADS-B-Data-Receiving,-Decoding-and-Sharing,-Leveraging-RTLSDR-and-Docker)
 
@@ -120,7 +120,7 @@ There are a series of available environment variables:
 
 | Port  | Purpose |
 | ----- | ------- |
-| `30105` | MLAT data in Beast format for tools such as [`graphs1090`](https://github.com/mikenye/docker-graphs1090) and/or [`tar1090`](https://github.com/mikenye/docker-tar1090)
+| `30105` | MLAT data in Beast format for tools such as [`graphs1090`](https://github.com/mikenye/docker-graphs1090) and/or [`tar1090`](https://github.com/sdr-enthusiasts/docker-tar1090)
 
 ## Logging
 
@@ -128,10 +128,10 @@ There are a series of available environment variables:
 
 ## Getting help
 
-Please feel free to [open an issue on the project's GitHub](https://github.com/mikenye/docker-adsbexchange/issues).
+Please feel free to [open an issue on the project's GitHub](https://github.com/sdr-enthusiasts/docker-adsbexchange/issues).
 
 I also have a [Discord channel](https://discord.gg/sTf9uYF), feel free to [join](https://discord.gg/sTf9uYF) and converse.
 
 ## Changelog
 
-See the [commit history](https://github.com/mikenye/docker-adsbexchange/commits/master) on GitHub.
+See the [commit history](https://github.com/sdr-enthusiasts/docker-adsbexchange/commits/master) on GitHub.
