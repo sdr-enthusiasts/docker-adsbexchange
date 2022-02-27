@@ -39,8 +39,8 @@ jobs:
         id: latest-version
         run: |
           set -x
-          docker run --rm --entrypoint cat local-docker-radarbox:latest /VERSIONS
-          echo "::set-output name=latestverhash::$(docker run --rm --entrypoint cat local-docker-radarbox:latest /VERSIONS)"
+          docker run --rm --entrypoint cat local-docker-adsbexchange:latest /VERSIONS
+          echo "::set-output name=latestverhash::$(docker run --rm --entrypoint cat local-docker-adsbexchange:latest /VERSIONS)"
 
   display_versions:
     name: Display versions
