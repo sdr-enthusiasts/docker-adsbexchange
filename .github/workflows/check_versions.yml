@@ -46,7 +46,7 @@ jobs:
         run: |
           set -x
           docker run --rm --entrypoint cat local_image_for_versions /VERSIONS
-          echo "::set-output name=latestverhash::$(docker run --rm --entrypoint cat local_image_for_versions /VERSIONS)"
+          echo "::set-output name=latestverhash::$(docker run --rm --entrypoint md5sum local_image_for_versions /VERSIONS)"
 
   display_versions:
     name: Display versions
