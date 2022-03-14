@@ -1,4 +1,4 @@
-FROM ghcr.io/sdr-enthusiasts/docker-baseimage:base
+FROM ghcr.io/sdr-enthusiasts/docker-baseimage:python
 
 ENV ADSBX_JSON_PATH="/run/adsbexchange-feed" \
     ADSBX_STATS_PATH="/run/adsbexchange-stats" \
@@ -28,45 +28,37 @@ RUN set -x && \
     KEPT_PACKAGES=() && \
     # Required for healthcheck
     KEPT_PACKAGES+=(jq) && \
-    KEPT_PACKAGES+=(dnsutils) && \
     # # Required for adsbexchange
     KEPT_PACKAGES+=(uuid-runtime) && \
     # Required for building multiple packages
     TEMP_PACKAGES+=(git) && \
-    TEMP_PACKAGES+=(build-essential) && \
-    TEMP_PACKAGES+=(cmake) && \
-    # Required for building readsb
-    TEMP_PACKAGES+=(ncurses-dev) && \
-    # mlat-client dependencies
-    KEPT_PACKAGES+=(python3-minimal) && \
-    KEPT_PACKAGES+=(python3-wheel) && \
-    KEPT_PACKAGES+=(python3-pip) && \
-    KEPT_PACKAGES+=(python3-setuptools) && \
-    TEMP_PACKAGES+=(python3-dev) && \
-    # raspberrypi/userland dependencies
+    TEMP_PACKAGES+=(make) && \
     TEMP_PACKAGES+=(gcc) && \
-    if apt-cache search gcc-arm-linux-gnueabihf | grep gcc-arm-linux-gnueabihf; then TEMP_PACKAGES+=(gcc-arm-linux-gnueabihf); fi && \
-    TEMP_PACKAGES+=(g++) && \
-    if apt-cache search g++-arm-linux-gnueabihf | grep g++-arm-linux-gnueabihf; then TEMP_PACKAGES+=(g++-arm-linux-gnueabihf); fi && \
-    # Install packages (--ignore-missing due to the *-arm-linux-gnueabihf packages)
-    apt-get install --ignore-missing -y --no-install-recommends \
+    # Required for readsb
+    TEMP_PACKAGES+=(libncurses5-dev) && \
+    KEPT_PACKAGES+=(libncurses5) && \
+    TEMP_PACKAGES+=(zlib1g-dev) && \
+    KEPT_PACKAGES+=(zlib1g) && \
+    # mlat-client dependencies
+    KEPT_PACKAGES+=(python3-venv) && \
+    TEMP_PACKAGES+=(python3-dev) && \
+    apt-get install -y --no-install-recommends \
         ${KEPT_PACKAGES[@]} \
         ${TEMP_PACKAGES[@]} \
         && \
-    # Clone adsb-exchange to get repo & branch of mlat-client & readsb
-    git clone --depth 1 "https://github.com/adsbxchange/adsb-exchange.git" "/src/adsb-exchange" && \
-    MLAT_REPO=$(grep -h '^MLAT_REPO=.*' /src/adsb-exchange/*.sh 2> /dev/null | head -1 | cut -d "=" -f 2 | tr -d '"') && \
-    MLAT_BRANCH=$(grep -h '^MLAT_BRANCH=.*' /src/adsb-exchange/*.sh 2> /dev/null | head -1 | cut -d "=" -f 2 | tr -d '"') && \
-    READSB_REPO=$(grep -h '^READSB_REPO=.*' /src/adsb-exchange/*.sh 2> /dev/null | head -1 | cut -d "=" -f 2 | tr -d '"') && \
-    READSB_BRANCH=$(grep -h '^READSB_BRANCH=.*' /src/adsb-exchange/*.sh 2> /dev/null | head -1 | cut -d "=" -f 2 | tr -d '"') && \
     # readsb
+    READSB_REPO=https://github.com/adsbxchange/readsb.git && \
+    READSB_BRANCH=master && \
     git clone --branch "$READSB_BRANCH" --depth 1 "$READSB_REPO" "/src/readsb" && \
     pushd "/src/readsb" && \
     echo "readsb $(git log | head -1)" >> /VERSIONS && \
-    make -j "$(nproc)" && \
-    find "/src/readsb" -maxdepth 1 -executable -type f -exec cp -v {} /usr/local/bin/ \; && \
+    make -j "$(nproc)" AIRCRAFT_HASH_BITS=12 && \
+    cp -v -T readsb /usr/local/bin/readsb && \
+    ln /usr/local/bin/readsb /usr/local/bin/viewadsb && \
     popd && \
     ldconfig && \
+    MLAT_REPO="https://github.com/adsbxchange/mlat-client.git" && \
+    MLAT_BRANCH="master" && \
     # mlat-client
     git clone --branch "$MLAT_BRANCH" --depth 1 "$MLAT_REPO" "/src/mlat-client" && \
     pushd /src/mlat-client && \
@@ -75,26 +67,12 @@ RUN set -x && \
     ./setup.py install && \
     popd && \
     ldconfig && \
-    # raspberrypi/userland: clone repo
-    git clone --depth 1 'https://github.com/raspberrypi/userland.git' /src/raspberrypi/userland && \
-    # raspberrypi/userland: remove sudo - this script runs as root
-    pushd /src/raspberrypi/userland && \
-    sed -i 's/sudo//g' ./buildme && \
-    # raspberrypi/userland: build & install
-    ./buildme "--$(uname -m)" && \
-    echo '/opt/vc/lib' > /etc/ld.so.conf.d/rpi_userland.conf && \
-    ldconfig && \
-    popd && \
-    # vcgencmd
-    python3 -m pip install --no-cache-dir vcgencmd && \
     # adsbexchange-stats
     git clone --depth 1 'https://github.com/adsbxchange/adsbexchange-stats.git' /src/adsbexchange-stats && \
     pushd /src/adsbexchange-stats && \
     echo "adsbexchange-stats $(git log | head -1)" >> /VERSIONS && \
     mv /src/adsbexchange-stats/json-status /usr/local/bin/json-status && \
     popd && \
-    # Fix for issue #41 (https://github.com/mikenye/docker-adsbexchange/issues/41)
-    sed -i 's/vcgencmd get_throttled/\/scripts\/vcgencmd_get_throttled_wrapper.sh/g' /usr/local/bin/json-status && \
     # Clean-up
     apt-get remove -y ${TEMP_PACKAGES[@]} && \
     apt-get autoremove -y && \
