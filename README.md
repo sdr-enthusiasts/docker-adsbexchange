@@ -32,7 +32,6 @@ For more information on [adsbexchange](https://www.adsbexchange.com), see here: 
 
 First-time users should generate a static UUID using this command:
 
-
 ```shell
 cat /proc/sys/kernel/random/uuid
 ```
