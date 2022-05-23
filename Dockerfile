@@ -28,8 +28,6 @@ RUN set -x && \
     KEPT_PACKAGES=() && \
     # Required for healthcheck
     KEPT_PACKAGES+=(jq) && \
-    # # Required for adsbexchange
-    KEPT_PACKAGES+=(uuid-runtime) && \
     # Required for building multiple packages
     TEMP_PACKAGES+=(git) && \
     TEMP_PACKAGES+=(make) && \

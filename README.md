@@ -30,12 +30,11 @@ For more information on [adsbexchange](https://www.adsbexchange.com), see here: 
 
 ## Generating a site UUID Number
 
-First-time users should generate a static UUID.
+First-time users should generate a static UUID using this command:
 
-To do this, run a temporary container with the following command:
 
 ```shell
-docker run --rm -it --entrypoint uuidgen ghcr.io/sdr-enthusiasts/docker-adsbexchange:latest -t
+cat /proc/sys/kernel/random/uuid
 ```
 
 Take note of the UUID returned. You should pass it as the `UUID` environment variable when running the container.
@@ -84,6 +83,11 @@ An example docker compose service definition is below:
       - /run:rw,nosuid,nodev,exec,relatime,size=64M,uid=1000,gid=1000
 ```
 
+## Check if everything is working
+
+* <https://www.adsbexchange.com/myip/>
+* <https://map.adsbexchange.com/mlat-map/>
+
 ## Runtime Environment Variables
 
 There are a series of available environment variables:
@@ -101,6 +105,7 @@ There are a series of available environment variables:
 | `REDUCE_INTERVAL`    | Optional. How often beastreduce data is transmitted to ADSBExchange. For low bandwidth feeds, this can be increased to `5` or even `10` | `0.5`     |
 | `PRIVATE_MLAT`       | Optional. Setting this to true will prevent feeder being shown on the [ADS-B Exchange Feeder Map](https://map.adsbexchange.com/mlat-map/)| `false`     |
 | `MLAT_INPUT_TYPE`    | Optional. Sets the input receiver type. Run `docker run --rm -it --entrypoint mlat-client ghcr.io/sdr-enthusiasts/docker-adsbexchange:latest --help` and see `--input-type` for valid values. | `dump1090` |
+| `STATS_DISABLE`      | Optional. Set to any value to disable stats module / anywhere map (if you don't like lots of DNS lookups, set this to 1) | unset |
 | `ADSB_FEED_DESTINATION_HOSTNAME` | Optional. Allows changing the hostname that ADS-B data is fed to. | `feed.adsbexchange.com` |
 | `ADSB_FEED_DESTINATION_PORT`     | Optional. Allows changing the TCP port that ADS-B data is fed to. | `30005` |
 | `ADSB_FEED_DESTINATION_TYPE`     | Optional. Allows changing the `readsb` output data type. | `beast_reduce_out` |
