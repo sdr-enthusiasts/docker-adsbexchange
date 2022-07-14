@@ -37,6 +37,7 @@ RUN set -x && \
     KEPT_PACKAGES+=(libncurses5) && \
     TEMP_PACKAGES+=(zlib1g-dev) && \
     KEPT_PACKAGES+=(zlib1g) && \
+    TEMP_PACKAGES+=(libzstd-dev) && \
     # mlat-client dependencies
     KEPT_PACKAGES+=(python3-venv) && \
     TEMP_PACKAGES+=(python3-dev) && \
