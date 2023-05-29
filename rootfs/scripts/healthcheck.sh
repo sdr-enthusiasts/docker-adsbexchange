@@ -41,13 +41,13 @@ fi
 
 # make sure we're feeding beast/beastreduce & mlat data to adsbexchange
 MYIP_JSON_OUTPUT=$(curl --silent -o - https://www.adsbexchange.com/myip/)
-if echo "$MYIP_JSON_OUTPUT" | grep -i beast > /dev/null 2>&1; then
+if echo "$MYIP_JSON_OUTPUT" | sed 's|<[^>]*>||g' | grep -i "Feed Ok ADS-B Status" > /dev/null 2>&1; then
     echo "ADSBx reports beast connection: HEALTHY"
 else
     echo "ADSBx reports beast connection: UNHEALTHY"
     EXITCODE=1
 fi
-if echo "$MYIP_JSON_OUTPUT" | grep -i mlat > /dev/null 2>&1; then
+if echo "$MYIP_JSON_OUTPUT" | sed 's|<[^>]*>||g'| grep -i "Feed Ok MLAT Status" > /dev/null 2>&1; then
     echo "ADSBx reports MLAT connection: HEALTHY"
 else
     echo "ADSBx reports MLAT connection: UNHEALTHY"
