@@ -65,6 +65,9 @@ First timers are encouraged to read [ADS-B Reception, Decoding & Sharing with Do
 An example docker compose service definition is below:
 
 ```yaml
+version: '2.0'
+
+services:
   adsbexchange:
     image: ghcr.io/sdr-enthusiasts/docker-adsbexchange:latest
     tty: true
