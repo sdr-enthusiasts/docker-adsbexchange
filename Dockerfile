@@ -41,10 +41,11 @@ RUN set -x && \
     # mlat-client dependencies
     KEPT_PACKAGES+=(python3-venv) && \
     TEMP_PACKAGES+=(python3-dev) && \
+    KEPT_PACKAGES+=(libncurses6) && \
     apt-get install -y --no-install-recommends \
-        ${KEPT_PACKAGES[@]} \
-        ${TEMP_PACKAGES[@]} \
-        && \
+    ${KEPT_PACKAGES[@]} \
+    ${TEMP_PACKAGES[@]} \
+    && \
     # readsb
     READSB_REPO=https://github.com/adsbxchange/readsb.git && \
     READSB_BRANCH=master && \
@@ -92,8 +93,8 @@ RUN set -x && \
     rm /etc/localtime && \
     ln -s /tmp/localtime /etc/localtime && \
     # Fix /etc/s6/init/init-stage2-fixattrs.txt for rootless operation
-    sed -i 's/ root / adsbx /g' /etc/s6/init/init-stage2-fixattrs.txt && \
-    redirfd -r 0 /etc/s6/init/init-stage2-fixattrs.txt fix-attrs && \
+    #sed -i 's/ root / adsbx /g' /etc/s6/init/init-stage2-fixattrs.txt && \
+    #redirfd -r 0 /etc/s6/init/init-stage2-fixattrs.txt fix-attrs && \
     # Simple date/time versioning
     date +%Y%m%d.%H%M > /CONTAINER_VERSION
 
