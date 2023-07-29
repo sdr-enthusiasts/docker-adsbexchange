@@ -57,7 +57,7 @@ RUN set -x && \
     ln /usr/local/bin/readsb /usr/local/bin/viewadsb && \
     popd && \
     ldconfig && \
-    MLAT_REPO="https://github.com/adsbxchange/mlat-client.git" && \
+    MLAT_REPO="https://github.com/wiedehopf/mlat-client.git" && \
     MLAT_BRANCH="master" && \
     # mlat-client
     git clone --branch "$MLAT_BRANCH" --depth 1 "$MLAT_REPO" "/src/mlat-client" && \
