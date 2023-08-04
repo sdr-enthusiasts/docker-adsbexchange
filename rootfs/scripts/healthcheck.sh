@@ -39,22 +39,24 @@ else
 
 fi
 
-# make sure we're feeding beast/beastreduce & mlat data to adsbexchange
-MYIP_JSON_OUTPUT=$(curl --silent -o - https://www.adsbexchange.com/myip/)
-if echo "$MYIP_JSON_OUTPUT" | sed 's|<[^>]*>||g' | grep -i "Feed Ok ADS-B Status" > /dev/null 2>&1; then
-    echo "ADSBx reports beast connection: HEALTHY"
-else
-    echo "ADSBx reports beast connection: UNHEALTHY"
-    EXITCODE=1
-fi
-if echo "$MYIP_JSON_OUTPUT" | sed 's|<[^>]*>||g'| grep -i "Feed Ok MLAT Status" > /dev/null 2>&1; then
-    echo "ADSBx reports MLAT connection: HEALTHY"
-else
-    echo "ADSBx reports MLAT connection: UNHEALTHY"
-    EXITCODE=1
-fi
+# DISABLING ADSBX specific checks since this container is used for other feeders too
 
-# make sure we're listening for beast 
+# make sure we're feeding beast/beastreduce & mlat data to adsbexchange
+# MYIP_JSON_OUTPUT=$(curl --silent -o - https://www.adsbexchange.com/myip/)
+# if echo "$MYIP_JSON_OUTPUT" | sed 's|<[^>]*>||g' | grep -i "Feed Ok ADS-B Status" > /dev/null 2>&1; then
+#     echo "ADSBx reports beast connection: HEALTHY"
+# else
+#     echo "ADSBx reports beast connection: UNHEALTHY"
+#     EXITCODE=1
+# fi
+# if echo "$MYIP_JSON_OUTPUT" | sed 's|<[^>]*>||g'| grep -i "Feed Ok MLAT Status" > /dev/null 2>&1; then
+#     echo "ADSBx reports MLAT connection: HEALTHY"
+# else
+#     echo "ADSBx reports MLAT connection: UNHEALTHY"
+#     EXITCODE=1
+# fi
+
+# make sure we're listening for beast
 if check_tcp4_socket_listening ANY 30005; then
     echo "listening for beast connections on port 30005. HEALTHY"
 else
@@ -62,7 +64,7 @@ else
     EXITCODE=1
 fi
 
-# make sure we're listening for mlat 
+# make sure we're listening for mlat
 if check_tcp4_socket_listening ANY 30105; then
     echo "listening for mlat connections on port 30105. HEALTHY"
 else
@@ -71,7 +73,7 @@ else
 fi
 
 # death count for adsbexchange-feed
-SERVICEDIR=/run/s6/services/adsbexchange-feed
+SERVICEDIR=/run/s6/legacy-services/adsbexchange-feed
 SERVICENAME=$(basename "${SERVICEDIR}")
 # shellcheck disable=SC2126
 SERVICE_DEATHS=$(s6-svdt "${SERVICEDIR}" | grep -v "exitcode 0" | wc -l)
@@ -84,7 +86,7 @@ fi
 s6-svdt-clear "${SERVICEDIR}"
 
 # death count for adsbexchange-stats
-SERVICEDIR=/run/s6/services/adsbexchange-stats
+SERVICEDIR=/run/s6/legacy-services/adsbexchange-stats
 SERVICENAME=$(basename "${SERVICEDIR}")
 # shellcheck disable=SC2126
 SERVICE_DEATHS=$(s6-svdt "${SERVICEDIR}" | grep -v "exitcode 0" | wc -l)
@@ -97,7 +99,7 @@ fi
 s6-svdt-clear "${SERVICEDIR}"
 
 # death count for healthcheck
-SERVICEDIR=/run/s6/services/healthcheck
+SERVICEDIR=/run/s6/legacy-services/healthcheck
 SERVICENAME=$(basename "${SERVICEDIR}")
 # shellcheck disable=SC2126
 SERVICE_DEATHS=$(s6-svdt "${SERVICEDIR}" | grep -v "exitcode 0" | wc -l)
@@ -110,7 +112,7 @@ fi
 s6-svdt-clear "${SERVICEDIR}"
 
 # death count for mlat-client
-SERVICEDIR=/run/s6/services/mlat-client
+SERVICEDIR=/run/s6/legacy-services/mlat-client
 SERVICENAME=$(basename "${SERVICEDIR}")
 # shellcheck disable=SC2126
 SERVICE_DEATHS=$(s6-svdt "${SERVICEDIR}" | grep -v "exitcode 0" | wc -l)
