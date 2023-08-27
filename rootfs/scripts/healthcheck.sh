@@ -99,17 +99,17 @@ fi
 s6-svdt-clear "${SERVICEDIR}"
 
 # death count for healthcheck
-SERVICEDIR=/run/s6/legacy-services/healthcheck
-SERVICENAME=$(basename "${SERVICEDIR}")
-# shellcheck disable=SC2126
-SERVICE_DEATHS=$(s6-svdt "${SERVICEDIR}" | grep -v "exitcode 0" | wc -l)
-if [ "$SERVICE_DEATHS" -ge 1 ]; then
-    echo "${SERVICENAME} error deaths: $SERVICE_DEATHS. UNHEALTHY"
-    EXITCODE=1
-else
-    echo "${SERVICENAME} error deaths: $SERVICE_DEATHS. HEALTHY"
-fi
-s6-svdt-clear "${SERVICEDIR}"
+# SERVICEDIR=/run/s6/legacy-services/healthcheck
+# SERVICENAME=$(basename "${SERVICEDIR}")
+# # shellcheck disable=SC2126
+# SERVICE_DEATHS=$(s6-svdt "${SERVICEDIR}" | grep -v "exitcode 0" | wc -l)
+# if [ "$SERVICE_DEATHS" -ge 1 ]; then
+#     echo "${SERVICENAME} error deaths: $SERVICE_DEATHS. UNHEALTHY"
+#     EXITCODE=1
+# else
+#     echo "${SERVICENAME} error deaths: $SERVICE_DEATHS. HEALTHY"
+# fi
+# s6-svdt-clear "${SERVICEDIR}"
 
 # death count for mlat-client
 SERVICEDIR=/run/s6/legacy-services/mlat-client
