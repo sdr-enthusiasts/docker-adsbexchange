@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/command/with-contenv bash
 # shellcheck disable=SC1091
 set -e
 
@@ -73,7 +73,7 @@ else
 fi
 
 # death count for adsbexchange-feed
-SERVICEDIR=/run/s6/legacy-services/adsbexchange-feed
+SERVICEDIR=/run/service/adsbexchange-feed
 SERVICENAME=$(basename "${SERVICEDIR}")
 # shellcheck disable=SC2126
 SERVICE_DEATHS=$(s6-svdt "${SERVICEDIR}" | grep -v "exitcode 0" | wc -l)
@@ -86,7 +86,7 @@ fi
 s6-svdt-clear "${SERVICEDIR}"
 
 # death count for adsbexchange-stats
-SERVICEDIR=/run/s6/legacy-services/adsbexchange-stats
+SERVICEDIR=/run/service/adsbexchange-stats
 SERVICENAME=$(basename "${SERVICEDIR}")
 # shellcheck disable=SC2126
 SERVICE_DEATHS=$(s6-svdt "${SERVICEDIR}" | grep -v "exitcode 0" | wc -l)
@@ -99,7 +99,7 @@ fi
 s6-svdt-clear "${SERVICEDIR}"
 
 # death count for healthcheck
-# SERVICEDIR=/run/s6/legacy-services/healthcheck
+# SERVICEDIR=/run/service/healthcheck
 # SERVICENAME=$(basename "${SERVICEDIR}")
 # # shellcheck disable=SC2126
 # SERVICE_DEATHS=$(s6-svdt "${SERVICEDIR}" | grep -v "exitcode 0" | wc -l)
@@ -112,7 +112,7 @@ s6-svdt-clear "${SERVICEDIR}"
 # s6-svdt-clear "${SERVICEDIR}"
 
 # death count for mlat-client
-SERVICEDIR=/run/s6/legacy-services/mlat-client
+SERVICEDIR=/run/service/mlat-client
 SERVICENAME=$(basename "${SERVICEDIR}")
 # shellcheck disable=SC2126
 SERVICE_DEATHS=$(s6-svdt "${SERVICEDIR}" | grep -v "exitcode 0" | wc -l)
