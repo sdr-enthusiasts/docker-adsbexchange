@@ -1,5 +1,5 @@
 #!/command/with-contenv bash
-# shellcheck disable=SC1091
+# shellcheck disable=SC1091,SC1008
 set -e
 
 # source healthcheck functions
@@ -15,7 +15,7 @@ if [ -f "/run/adsbexchange-feed/aircraft.json" ]; then
     # get current timestamp
     TIMESTAMP_NOW=$(date +"%s.%N")
 
-    # makse sure readsb has updated json in past 60 seconds
+    # makes sure readsb has updated json in past 60 seconds
     TIMEDELTA=$(echo "$TIMESTAMP_NOW - $TIMESTAMP_LAST_READSB_UPDATE" | bc)
     if [ "$(echo "$TIMEDELTA" \< 60 | bc)" -ne 1 ]; then
         echo "adsbexchange-feed last updated: ${TIMESTAMP_LAST_READSB_UPDATE}, now: ${TIMESTAMP_NOW}, delta: ${TIMEDELTA}. UNHEALTHY"

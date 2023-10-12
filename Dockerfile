@@ -22,6 +22,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 COPY rootfs/ /
 
+# hadolint ignore=DL3008,SC2086,SC2039,SC2068
 RUN set -x && \
     apt-get update && \
     TEMP_PACKAGES=() && \
