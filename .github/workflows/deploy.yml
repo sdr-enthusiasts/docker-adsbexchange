@@ -16,14 +16,11 @@ on:
     branches:
       - main
     # Don't trigger if it's just a documentation update
-    paths-ignore:
-      - "**.md"
-      - "**.MD"
-      - "**.yml"
-      - "LICENSE"
-      - ".gitattributes"
-      - ".gitignore"
-      - ".dockerignore"
+    paths:
+      - "rust/**"
+      - "Dockerfile"
+      - "Dockerfile.build_binary"
+      - "rootfs/**"
 
 # Set workflow-wide environment variables
 #  - REPO: repo name on dockerhub
