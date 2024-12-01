@@ -67,7 +67,6 @@ An example docker compose service definition is below:
 ```yaml
 adsbexchange:
   image: ghcr.io/sdr-enthusiasts/docker-adsbexchange:latest
-  tty: true
   container_name: adsbx
   restart: always
   environment:
