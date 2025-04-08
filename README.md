@@ -2,7 +2,7 @@
 
 > [!WARNING]
 > This repo is archived, and the corresponding container(s) are no longer actively maintained.
-> If you want to feed ADSBExchange` via a container, we recommend that you do so using the [Ultrafeeder](https://github.com/sdr-enthusiasts/docker-adsb-ultrafeeder) container, which can feed ADSBExchange and many more aggregators.
+> If you want to feed ADSBExchange via a container, we recommend that you do so using the [Ultrafeeder](https://github.com/sdr-enthusiasts/docker-adsb-ultrafeeder) container, which can feed ADSBExchange and many more aggregators.
 
 [![Docker Image Size (tag)](https://img.shields.io/docker/image-size/mikenye/adsbexchange/latest)](https://hub.docker.com/r/mikenye/adsbexchange)
 [![Discord](https://img.shields.io/discord/734090820684349521)](https://discord.gg/sTf9uYF)
