@@ -7,8 +7,7 @@ exec \
   --net \
   --net-only \
   --quiet \
-  --net-heartbeat 60 \
-  --net-ro-size 1280 \
+  --uuid-file=/boot/adsbx-uuid \
   --net-beast-reduce-interval "${REDUCE_INTERVAL}" \
   --net-connector "${ADSB_FEED_DESTINATION_HOSTNAME},${ADSB_FEED_DESTINATION_PORT},${ADSB_FEED_DESTINATION_TYPE},${ADSB_FEED_SECONDARY_DESTINATION_HOSTNAME},${ADSB_FEED_SECONDARY_DESTINATION_PORT}" \
   --net-connector "${BEASTHOST}","${BEASTPORT}",beast_in \
