@@ -1,6 +1,6 @@
 # sdr-enthusiasts/docker-adsbexchange
 
-> [!DEPRECIATION NOTICE]
+> [!WARNING]
 > This repo is archived, and the corresponding container(s) are no longer actively maintained.
 > If you want to feed ADSBExchange` via a container, we recommend that you do so using the [Ultrafeeder](https://github.com/sdr-enthusiasts/docker-adsb-ultrafeeder) container, which can feed ADSBExchange and many more aggregators.
 
