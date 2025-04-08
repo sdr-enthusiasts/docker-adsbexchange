@@ -2,8 +2,6 @@
 # shellcheck shell=bash
 
 
-source /usr/local/share/adsbexchange/venv/bin/activate
-
 MLAT_CMD="mlat-client"
 MLAT_PARAM=(--input-type "${MLAT_INPUT_TYPE}")
 MLAT_PARAM+=(--no-udp)
